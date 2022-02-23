@@ -9,15 +9,12 @@ var sequelize = require('sequelize');
 var PrettyError = require('pretty-error');
 var cookieParser = require('cookie-parser');
 var cookieEncrypter = require('cookie-encrypter');
-var models = require("./server/models/");
 var session = require('express-session');
 var passport = require('passport');
 var consolidate = require('consolidate');
 var cookieSecretKey = process.env.COOKIE_SECRET_KEY;
 var sessionSecretKey = process.env.SESSION_SECRET_KEY;
 var app = express();
-var BUILD_DIR = path.resolve(__dirname, './client/public/build');
-var APP_DIR = path.resolve(__dirname, './client/app');
 var config = require('./server/config/config.js');
 
 // Initialize pretty-error
@@ -36,11 +33,14 @@ app.use(bodyParser.urlencoded({
 
 
 // Service static assets
-app.use(express.static(path.join(__dirname, './client/public/')));
-app.use(express.static(path.join(__dirname, './client/public/build/')));
+app.use('/*', express.static(path.join(__dirname, './merchant_store/build/')));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, './merchant_store/build/', 'index.html'));
+});
 
 // passport & cookie encryption config
-require('./server/config/passport')(app);
+//require('./server/config/passport')(app);
 app.use(cookieParser(cookieSecretKey));
 app.use(cookieEncrypter(cookieSecretKey));
 app.use(session({
@@ -48,8 +48,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 // Set swig as the template engine
 app.engine('template.html', consolidate[config.templateEngine]);
@@ -58,12 +58,7 @@ app.engine('template.html', consolidate[config.templateEngine]);
 app.set('view engine', 'template.html');
 
 // Index Routes
-require('./routes/index.js')(app);
-
-// Sync models THEN start server
-models.sequelize.sync({
-  force: process.env.DB_FORCE === 'true'
-}).then(function () {
+//require('./routes/index.js')(app);
 
   var server = http.createServer(app);
   server.listen(app.get('port'), function () {
@@ -73,9 +68,7 @@ models.sequelize.sync({
   // Reload code here
   var reloadServer = reload(server, app);
 
-  watch.watchTree(__dirname + "/client", function (f, curr, prev) {
+  watch.watchTree(__dirname + "/merchant_store/build/", function (f, curr, prev) {
     // Fire server-side reload event
     reloadServer.reload();
   });
-
-});
