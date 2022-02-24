@@ -31,9 +31,11 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+app.use(bodyParser.json({limit: '200mb'}));
+
 
 // Service static assets
-app.use('/*', express.static(path.join(__dirname, './merchant_store/build/')));
+app.use(express.static(path.join(__dirname, './merchant_store/build/')));
 
 app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, './merchant_store/build/', 'index.html'));
