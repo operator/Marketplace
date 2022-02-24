@@ -61,7 +61,7 @@ app.set('view engine', 'template.html');
 //require('./routes/index.js')(app);
 
   var server = http.createServer(app);
-  server.listen(app.get('port'), function () {
+  server.listen(process.env.PORT || 5000, ()=> {
     console.log('App is listening on port ' + config.port + '! Visit localhost:' + config.port + ' in your browser.');
   });
 
