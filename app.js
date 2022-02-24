@@ -25,6 +25,13 @@ pe.start();
 app.set('port', process.env.PORT || 5000);
 app.use(logger('dev'));
 
+// Service static assets
+app.use(express.static(path.join(__dirname, 'merchant_store/build/')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'merchant_store/build/', 'index.html'));
+});
+
 
 // Support URL-encoded bodies
 app.use(bodyParser.urlencoded({
@@ -32,14 +39,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json({limit: '200mb'}));
-
-
-// Service static assets
-app.use(express.static(path.join(__dirname, './merchant_store/build/')));
-
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, './merchant_store/build/', 'index.html'));
-});
 
 // passport & cookie encryption config
 //require('./server/config/passport')(app);
@@ -66,7 +65,7 @@ app.set('view engine', 'template.html');
 
   var server = http.createServer(app);
   server.listen(process.env.PORT || 5000, ()=> {
-    console.log('App is listening on port ' + config.port + '! Visit localhost:' + config.port + ' in your browser.');
+    console.log('App is listening on port ' + 5000 + '! Visit localhost:' + 5000 + ' in your browser.');
   });
 
   // Reload code here
