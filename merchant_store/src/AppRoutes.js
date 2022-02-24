@@ -10,9 +10,9 @@ const AppRoutes = () => {
 
     return (
         <Routes location={location} key={location.pathname}>
-            <Route path="/marketplace" element={<Home />} />
-            <Route path="/marketplace/products" element={ <MarketplaceSearch/> }/>
-            <Route path="/marketplace/product-details" element={ <ProductDetails/> }/>
+            <Route path="/*" element={<Home />} />
+            <Route path="/products" element={ <MarketplaceSearch/> }/>
+            <Route path="/product-details" element={ <ProductDetails/> }/>
         </Routes>
     )
 }

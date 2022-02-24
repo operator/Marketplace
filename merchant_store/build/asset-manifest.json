@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/marketplace/static/css/main.85e4e50f.css",
-    "main.js": "/marketplace/static/js/main.027e3afe.js",
-    "static/js/787.e6a6ff5f.chunk.js": "/marketplace/static/js/787.e6a6ff5f.chunk.js",
-    "static/media/bg-elder-statesman.png": "/marketplace/static/media/bg-elder-statesman.3b503d68a7cee92f167d.png",
-    "static/media/bg-sugarpill.png": "/marketplace/static/media/bg-sugarpill.34521d3b35677593ce11.png",
-    "static/media/sponsoredBillboard.svg": "/marketplace/static/media/sponsoredBillboard.f87aad2131fb0493808882e73b5fbfff.svg",
-    "static/media/magicMind.svg": "/marketplace/static/media/magicMind.66041e2eb9cb59fbaf33d41cdf8ee48e.svg",
-    "static/media/bg-susane-kaufmann.png": "/marketplace/static/media/bg-susane-kaufmann.ff78b023d1b97bf137ac.png",
-    "static/media/logo-sugarpill.png": "/marketplace/static/media/logo-sugarpill.d4ad89a96454b7aa2331.png",
-    "static/media/logo-elder-statesman.png": "/marketplace/static/media/logo-elder-statesman.604c43114eca7847c1e4.png",
-    "static/media/Marketplace.svg": "/marketplace/static/media/Marketplace.fe9e7b1d50f321eddcfa6129a9538fae.svg",
-    "static/media/byOperator.svg": "/marketplace/static/media/byOperator.700d3576cf4b551ed78fb4b5406b9444.svg",
-    "static/media/operator.svg": "/marketplace/static/media/operator.c13652bdc51dc04021499e1ff7eda9b8.svg",
-    "index.html": "/marketplace/index.html",
-    "main.85e4e50f.css.map": "/marketplace/static/css/main.85e4e50f.css.map",
-    "main.027e3afe.js.map": "/marketplace/static/js/main.027e3afe.js.map",
-    "787.e6a6ff5f.chunk.js.map": "/marketplace/static/js/787.e6a6ff5f.chunk.js.map"
+    "main.css": "/static/css/main.85e4e50f.css",
+    "main.js": "/static/js/main.65f0e05a.js",
+    "static/js/787.e6a6ff5f.chunk.js": "/static/js/787.e6a6ff5f.chunk.js",
+    "static/media/bg-elder-statesman.png": "/static/media/bg-elder-statesman.3b503d68a7cee92f167d.png",
+    "static/media/bg-sugarpill.png": "/static/media/bg-sugarpill.34521d3b35677593ce11.png",
+    "static/media/sponsoredBillboard.svg": "/static/media/sponsoredBillboard.f87aad2131fb0493808882e73b5fbfff.svg",
+    "static/media/magicMind.svg": "/static/media/magicMind.66041e2eb9cb59fbaf33d41cdf8ee48e.svg",
+    "static/media/bg-susane-kaufmann.png": "/static/media/bg-susane-kaufmann.ff78b023d1b97bf137ac.png",
+    "static/media/logo-sugarpill.png": "/static/media/logo-sugarpill.d4ad89a96454b7aa2331.png",
+    "static/media/logo-elder-statesman.png": "/static/media/logo-elder-statesman.604c43114eca7847c1e4.png",
+    "static/media/Marketplace.svg": "/static/media/Marketplace.fe9e7b1d50f321eddcfa6129a9538fae.svg",
+    "static/media/byOperator.svg": "/static/media/byOperator.700d3576cf4b551ed78fb4b5406b9444.svg",
+    "static/media/operator.svg": "/static/media/operator.c13652bdc51dc04021499e1ff7eda9b8.svg",
+    "index.html": "/index.html",
+    "main.85e4e50f.css.map": "/static/css/main.85e4e50f.css.map",
+    "main.65f0e05a.js.map": "/static/js/main.65f0e05a.js.map",
+    "787.e6a6ff5f.chunk.js.map": "/static/js/787.e6a6ff5f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.85e4e50f.css",
-    "static/js/main.027e3afe.js"
+    "static/js/main.65f0e05a.js"
   ]
 }

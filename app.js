@@ -22,7 +22,7 @@ var pe = new PrettyError();
 pe.start();
 
 // Set port for heroku deployment
-app.set('port', config.port);
+app.set('port', process.env.PORT || 5000);
 app.use(logger('dev'));
 
 
@@ -41,6 +41,7 @@ app.get('/*', (req, res) => {
 
 // passport & cookie encryption config
 //require('./server/config/passport')(app);
+/*
 app.use(cookieParser(cookieSecretKey));
 app.use(cookieEncrypter(cookieSecretKey));
 app.use(session({
@@ -48,6 +49,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+*/
 //app.use(passport.initialize());
 //app.use(passport.session());
 
