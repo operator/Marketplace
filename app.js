@@ -28,7 +28,7 @@ app.use(logger('dev'));
 // Service static assets
 app.use(express.static(path.join(__dirname, 'merchant_store/build/')));
 
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'merchant_store/build/', 'index.html'));
 });
 
@@ -40,28 +40,11 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json({limit: '200mb'}));
 
-// passport & cookie encryption config
-//require('./server/config/passport')(app);
-/*
-app.use(cookieParser(cookieSecretKey));
-app.use(cookieEncrypter(cookieSecretKey));
-app.use(session({
-  secret: sessionSecretKey,
-  resave: false,
-  saveUninitialized: true
-}));
-*/
-//app.use(passport.initialize());
-//app.use(passport.session());
-
 // Set swig as the template engine
 app.engine('template.html', consolidate[config.templateEngine]);
 
 // Set views path and view engine
 app.set('view engine', 'template.html');
-
-// Index Routes
-//require('./routes/index.js')(app);
 
   var server = http.createServer(app);
   server.listen(process.env.PORT || 5000, ()=> {
