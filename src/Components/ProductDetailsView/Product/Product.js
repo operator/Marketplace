@@ -39,7 +39,7 @@ export default function Product() {
                         <p>{product.title}</p>
                         <h5 className="fw-bold">${product.maxPrice}</h5>
                         <div className="d-flex margin-bottom-extra">
-                            <a className="black-button text-center" href={loadingProduct !== true && console.log(test)}>Buy Now</a>
+                            <a className="black-button text-center" href={product.checkoutLink}>Buy Now</a>
                         </div>
                         <p>{product.title}</p>
                         <p>Size: <span className="fw-bold">{product.description}</span></p>
