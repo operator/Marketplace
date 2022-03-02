@@ -7,7 +7,7 @@ const { REACT_APP_API_TOKEN } = process.env;
 const instance = axios.create({
   headers: {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${REACT_APP_API_TOKEN || "K8beq2L1OIyUkYId0EBkJYiM689kXplW"}`
+    "Authorization": `Bearer ${REACT_APP_API_TOKEN}`
   },
 });
 
