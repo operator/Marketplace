@@ -44,5 +44,16 @@
         grid-template-columns: repeat(1, 1fr);
         grid-gap: 16px;
         padding-bottom: 32px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .products-wrapper-load {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .products-wrapper-load .card {
+        width: 75%;
     }
 }

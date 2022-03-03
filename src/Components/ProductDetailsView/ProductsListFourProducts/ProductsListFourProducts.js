@@ -32,7 +32,7 @@ const ProductsListFourProducts = () => {
     const WrappedLoader = ({
       className
     }) => {
-      return <div className={"d-flex align-items-center jc-sb col-12"}>
+      return <div className={"d-flex align-items-center jc-sb col-12 products-wrapper-load"}>
         <ProductBlockLoader />
         <ProductBlockLoader />
         <ProductBlockLoader />
