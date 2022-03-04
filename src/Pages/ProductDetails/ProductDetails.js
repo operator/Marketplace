@@ -4,13 +4,27 @@ import ProductDetailsView from '../../Components/ProductDetailsView/ProductDetai
 import APIProvider from '../../Contexts/APIContext';
 import API from '../../services/api';
 import axios from 'axios';
+import queryString from 'query-string';
+
+function getQueryString(_url) {
+    const url = new URL(_url);
+    return queryString.parse(url.search) || {};
+}
 
 class ProductDetails extends Component {
     constructor(props) {
         super(props);
 
-        const productDetails = JSON.parse(sessionStorage.productDetails);
-        console.log(productDetails)
+        sessionStorage.removeItem('productID');
+        var productDetails = {}
+        const queryStrings = getQueryString(window.location.href);
+        
+        if(sessionStorage.productDetails === undefined) {
+            sessionStorage.productID = queryStrings.product;
+        } else {
+            productDetails = JSON.parse(sessionStorage.productDetails);
+        }
+
         this.state = {
             product:{
                 checkoutLink: productDetails.checkoutLink,
@@ -27,8 +41,8 @@ class ProductDetails extends Component {
                 vendor: productDetails.vendor
             },
             products: [],
+            productsLoading: true,
             productLoading: true,
-            loadingProduct: true,
             productFilters: productDetails.title,
             test:{}
         }
@@ -42,24 +56,33 @@ class ProductDetails extends Component {
         });
         this.setState({
             products: data.value,
-            productLoading: false
+            productsLoading: false
         })
     }
 
-    getProduct = async (filters = {}) => {
-        const productDetails = JSON.parse(sessionStorage.productDetails);
-        const { productData } = await API.get('/api/product', {
-            productID:productDetails.productID,
+    getProduct = async (productID) => {
+        API.get('/api/product', {
+            productID,
+        }).then((response) => {
+            const productData = response.data.value;
+            this.setState({
+                product: productData,
+                productLoading: false
+            });
+            this.getProducts(productData.title);
         });
-        this.setState({
-            test: productData,
-            loadingProduct: false
-        })
     }
  
     componentDidMount() {
-        this.getProducts(this.state.productFilters);
-        this.getProduct();
+
+        if(sessionStorage.productID !== undefined){
+            this.getProduct(sessionStorage.productID)
+        } else {
+            this.setState({
+                productLoading: false
+            });
+            this.getProducts(this.state.productFilters);
+        }
     }
 
     render() {
@@ -69,10 +92,9 @@ class ProductDetails extends Component {
                 <APIProvider.Provider value={{
                     products: this.state.products,
                     product: this.state.product,
-                    loading: this.state.productLoading,
-                    loadingProduct: this.state.loadingProduct,
+                    loadingProducts: this.state.productsLoading,
+                    loadingProduct: this.state.productLoading,
                     getProducts: this.getProducts,
-                    test: this.state.test
                 }} >
                     <ProductDetailsView />
                 </APIProvider.Provider>

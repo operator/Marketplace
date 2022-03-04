@@ -4,7 +4,7 @@ import APIContext from '../../../Contexts/APIContext';
 
 export default function Product() {
 
-    const { product, test, loading, loadingProduct } = useContext(APIContext);
+    const { product } = useContext(APIContext);
 
     const [mainImage, setMainImage] = useState(product.images[0].src);
     const mainImageOriginal = product.images[0].src;
@@ -43,7 +43,7 @@ export default function Product() {
                         </div>
                         <p>{product.title}</p>
                         <p>Size: <span className="fw-bold">{product.description}</span></p>
-                        <p>Type: <span className="fw-bold">{product.type}</span></p>
+                        {/*<p>Type: <span className="fw-bold">{product.type}</span></p> */}
                     </div>
             </div>
     )

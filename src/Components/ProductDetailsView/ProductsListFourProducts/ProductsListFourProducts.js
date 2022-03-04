@@ -7,7 +7,7 @@ import Loader from '../../Loader';
 
 
 const ProductsListFourProducts = () => {
-    let { products, loading, test } = useContext(APIContext);
+    let { products, loadingProducts } = useContext(APIContext);
 
     const ProductBlockLoader = () => {
       return <div className="card border-0">
@@ -42,12 +42,11 @@ const ProductsListFourProducts = () => {
     
     return (
         <>
-            {loading ? <WrappedLoader className="mt-5 pt-5" /> 
+            {loadingProducts ? <WrappedLoader className="mt-5 pt-5" /> 
                 :
                 <div className="d-flex justify-content-center align-items-center pt-5 mt-5">
                     <div className="products-wrapper">
                             {products.slice(0,4).map((product) => <ProductBlock key={product.productID} productData={product} />)}
-                            {console.log(test)}
                     </div>
                 </div>
             }

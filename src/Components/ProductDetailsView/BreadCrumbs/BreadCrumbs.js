@@ -10,8 +10,12 @@ const BreadCrumbs = () => {
     return (
       <div className="flex-column ai-c col-9">
         <div className="d-flex ai-c category-trail">
-          <p>{product.category}</p>
-          <img src={ArrowRight} className="arrow-right" />
+          {/*
+            Commented out until category DB value
+            Available
+            <p>{product.category}</p>
+            <img src={ArrowRight} className="arrow-right" />
+          */}
           <p>{product.vendor}</p>
           <img src={ArrowRight} className="arrow-right" />
           <p>{product.title}</p>
