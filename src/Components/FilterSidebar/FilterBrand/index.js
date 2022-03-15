@@ -1,50 +1,41 @@
-import React, {useState} from 'react'
-import Multiselect from 'multiselect-react-dropdown'
-import './styles.scss'
-import API from '../../../services/api'
+import React, { useState } from 'react';
+
+import './styles.scss';
+import API from '../../../services/api';
+import CheckBoxGroup from '../../CheckBoxGroup';
 
 const FilterBrand = (props) => {
 
-    const [brands, setBrands] = useState([])
-    const [fn, setFn] = useState(false)
+  const [brands, setBrands] = useState([])
+  const [fn, setFn] = useState(false)
 
-    const getBrands = async search => {
+  const getBrands = async search => {
 
-        setFn(true)
+    setFn(true)
 
-        try {
-            const {data} = await API.get('/api/brand/list', {search});
-            setBrands(data.value)
+    try {
+      const { data } = await API.get('/api/brand/list', { search });
+      setBrands(data.value)
 
-        } catch (error) {
-            console.log(error.message)
-        }
-
+    } catch (error) {
+      console.log(error.message)
     }
 
-    if (!fn) {
-        getBrands()
-    }
+  }
 
-    // Filter checkbox & radio
-    const handleOptionChange = event => {
-        props.changeBrandsFilterBar(event);
-    }
+  if (!fn) {
+    getBrands()
+  }
 
-
-    return (
-        <>
-            <Multiselect
-                options={brands}
-                onSelect={handleOptionChange}
-                onRemove={handleOptionChange}
-                showCheckbox={true}
-                isObject={false}
-                onSearch={getBrands}
-                avoidHighlightFirstOption={true}
-            />
-        </>
-    )
+  return (
+    <CheckBoxGroup
+      options={brands.map((brand) => ({
+        label: brand,
+        value: brand
+      }))}
+      onChange={props.changeBrandsFilterBar}
+    />
+  )
 }
 
-export default FilterBrand
+export default FilterBrand;

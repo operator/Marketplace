@@ -1,8 +1,11 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL || 'https://operator-node-app-32192-prod.herokuapp.com';
+const { 
+  REACT_APP_API_TOKEN, 
+  REACT_APP_API_BASE_URL = 'https://operator-node-app-32192-prod.herokuapp.com' 
+} = process.env;
 
-const { REACT_APP_API_TOKEN } = process.env;
+axios.defaults.baseURL = REACT_APP_API_BASE_URL
 
 const instance = axios.create({
   headers: {

@@ -1,6 +1,6 @@
-.product-details-page .card {
+/* .product-details-page .card {
     width: 18%;
-}
+} */
 
 .product-scroll {
     position: relative;
@@ -21,15 +21,10 @@
     grid-auto-rows: 1fr;
     grid-gap: 48px 5%;
     padding-bottom: 48px;
-    /*max-width: 748px;*/
     margin: 0 auto;
 }
 
 @media (min-width: 768px) and (max-width: 1194px) {
-    .product-scroll {
-        max-height: calc(100vh - 362px);
-    }
-
     .products-wrapper {
         grid-template-columns: repeat(2, 1fr);
     }
