@@ -38,3 +38,9 @@ body {
 .zi-0 {
   z-index: 0;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

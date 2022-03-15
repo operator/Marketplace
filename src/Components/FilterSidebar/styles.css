@@ -1,6 +1,13 @@
 .filter-wrapper {
     padding: 31px 16px;
-    top: 132px
+    top: 132px;
+    max-height: calc(100vh - 132px);
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+}
+.filter-wrapper::-webkit-scrollbar {
+    display: none;
 }
 
 .filter-wrapper .optionListContainer {

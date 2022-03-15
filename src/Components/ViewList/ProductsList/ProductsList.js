@@ -33,7 +33,7 @@ const ProductsList = () => {
           />}
       <div className="product-scroll">
         <div className="products-wrapper">
-          {products.map((product) => <ProductBlock key={product.id} productData={product} />)}
+          {products.map((product, index) => <ProductBlock key={index} productData={product} />)}
         </div>
       </div>
     </InfiniteScroll>

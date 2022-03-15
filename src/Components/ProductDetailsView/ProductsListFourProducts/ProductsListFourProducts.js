@@ -3,18 +3,18 @@ import './ProductsListFourProducts.css';
 import classnames from 'classnames';
 import APIContext from '../../../Contexts/APIContext';
 import ProductBlock from '../../ViewList/ProductBlock/ProductBlock';
-import Loader from '../../Loader';
 
 
 const ProductsListFourProducts = () => {
     let { products, loadingProducts } = useContext(APIContext);
 
     const ProductBlockLoader = () => {
-      return <div className="card border-0">
-        <div className="placeholder-glow">
+      return <div className="card border-0 flex-row flex-md-column">
+        <div className="placeholder-glow col-6 col-md-12">
           <div className="placeholder p-5 w-100" />
+          <div className="placeholder p-5 w-100 d-none d-md-block" />
         </div>
-        <div className="card-body">
+        <div className="card-body col-6 col-md-12">
           <h5 className="card-title placeholder-glow">
             <span className="placeholder col-6"></span>
           </h5>
@@ -32,7 +32,7 @@ const ProductsListFourProducts = () => {
     const WrappedLoader = ({
       className
     }) => {
-      return <div className={"d-flex align-items-center jc-sb col-12 products-wrapper-load"}>
+      return <div className={classnames("mt-md-3 products-wrapper w-100", className)}>
         <ProductBlockLoader />
         <ProductBlockLoader />
         <ProductBlockLoader />
@@ -42,10 +42,10 @@ const ProductsListFourProducts = () => {
     
     return (
         <>
-            {loadingProducts ? <WrappedLoader className="mt-5 pt-5" /> 
+            {loadingProducts ? <WrappedLoader /> 
                 :
-                <div className="d-flex justify-content-center align-items-center pt-5 mt-5">
-                    <div className="products-wrapper">
+                <div className="d-flex justify-content-center align-items-center mt-md-3">
+                    <div className="products-wrapper w-100">
                             {products.slice(0,4).map((product) => <ProductBlock key={product.productID} productData={product} />)}
                     </div>
                 </div>

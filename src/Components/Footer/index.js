@@ -1,6 +1,6 @@
 import operator from '../../Assets/operator.svg';
 const Footer = () => {
-  return <footer className="bg-primary mt-4">
+  return <footer className="bg-primary mt-auto">
     <div className="container text-white py-3">
       <div className="d-flex flex-column flex-md-row justify-content-between">
         <div className="text-center flex-grow-1 text-md-start mb-4 pe-3">

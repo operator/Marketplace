@@ -15,18 +15,18 @@ const Logo = () => {
 				fill="#07072C"
 			/>
 			<path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
+				fillRule="evenodd"
+				clipRule="evenodd"
 				d="M201.063 9.41151C205.401 13.4339 211.21 15.8929 217.593 15.8929C217.874 15.8929 218.155 15.8881 218.434 15.8786C218.971 14.7041 219.27 13.3984 219.27 12.0229C219.27 6.89243 215.11 2.7334 209.98 2.7334C205.756 2.7334 202.191 5.55235 201.063 9.41151Z"
 				fill="#07072C"
-				fill-opacity="0.9"
+				fillOpacity="0.9"
 			/>
 			<circle
 				r="8.30585"
 				transform="matrix(-1 0 0 1 209.976 12.0238)"
 				stroke="#07072C"
-				stroke-opacity="0.9"
-				stroke-width="1.96721"
+				strokeOpacity="0.9"
+				strokeWidth="1.96721"
 			/>
 		</svg>
 	);

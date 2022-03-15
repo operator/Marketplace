@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './HeaderCategories.css'
 import API from '../../services/api'
 
@@ -11,17 +11,19 @@ const HeaderCategories = props => {
         // TODO Adding multiple categories
         try {
             let { data } = await API.get('/api/category/list', {lvl: 1});
-            data = data.value.filter( i => i.title === 'Health' );
-            setCategories(data);
+            setCategories(data.value.filter(({ title }) => title === 'Health'));
 
         } catch (error) {
             setCategories(error.message);
         }
 
     }
-    if (!categories.length) {
-        getCategory();
-    }
+
+    useEffect(() => {
+        if (!categories.length) {
+            getCategory();
+        }
+    }, [categories])
 
     const handleCategoryChange = event => {
         let title = event.target.dataset.title;
@@ -33,12 +35,12 @@ const HeaderCategories = props => {
     return (
         <div className="cat-bar-wrapper flex">
             <h3>Category</h3>
-            <ul className="cat-list flex ai-c fw-w">
+            <ul className="cat-list flex ai-c fw-w m-0">
                 {categories.map((category) => (
                     <li
                         data-title={category.title}
                         key={category.id}
-                        className={`cat-list__item ${active === category.title ? "active" : ""}`}
+                        className={`cat-list__item m-2 px-3 py-2 ${active === category.title ? "active" : ""}`}
                         onClick={handleCategoryChange}>{category.title}
                     </li>
                 ))}
@@ -46,7 +48,7 @@ const HeaderCategories = props => {
             {/* temp button */}
                 <li
                     data-title=""
-                    className={`cat-list__item ${active === "" ? "active" : ""}`}
+                    className={`cat-list__item m-2 px-3 py-2 ${active === "" ? "active" : ""}`}
                     onClick={handleCategoryChange}>All categories..
                 </li>
             </ul>
