@@ -1,12 +1,11 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import FilterSidebar from '../../Components/FilterSidebar'
 import Header from '../../Components/Header/Header'
-import HeaderCategories from '../../Components/HeaderCategories/HeaderCategories'
 import ViewList from '../../Components/ViewList/ViewList'
 import APIProvider from '../../Contexts/APIContext'
 import API from '../../services/api'
-import {SORT_BY_OPTIONS} from '../../constants'
-import {isEmpty, debounce } from 'lodash';
+import { SORT_BY_OPTIONS } from '../../constants'
+import { isEmpty, debounce } from 'lodash';
 import queryString from 'query-string';
 import Footer from '../../Components/Footer';
 
@@ -41,8 +40,7 @@ class MarketplaceSearch extends Component {
             hasMoreProducts: true,
             searchKeyWord: queryStrings.search || '',
             totalProducts: 0,
-            brandsFilterBar: { brand: [] },
-            categoryBar: { category: [] }
+            brandsFilterBar: { brand: [] }
         }
 
         this.screenWidth = window.screen.width;
@@ -56,30 +54,22 @@ class MarketplaceSearch extends Component {
         }, this.getProducts)
     }
 
-    changeCategoryBar = category => {
-        this.setState({
-            categoryBar: {
-                category
-            }
-        }, this.getProducts)
-    }
-
     getProducts = debounce(async (filters = {}) => {
         try {
             this.setState({
                 productLoading: true,
                 productFetchError: null
             });
-        if (!isEmpty(filters)) {
-            this.setState({
-                productSortBar: {
-                    ...this.state.productSortBar,
-                    ...filters
-                },
-            })
-        }
+            if (!isEmpty(filters)) {
+                this.setState({
+                    productSortBar: {
+                        ...this.state.productSortBar,
+                        ...filters
+                    },
+                })
+            }
             const { data } = await API.get('/api/products',
-                Object.assign(this.state.categoryBar, this.state.productFilterBar, this.state.productSortBar, this.state.brandsFilterBar)
+                Object.assign(this.state.productFilterBar, this.state.productSortBar, this.state.brandsFilterBar)
             );
             this.setState({
                 products: data.value,
@@ -87,7 +77,7 @@ class MarketplaceSearch extends Component {
                 hasMoreProducts: data.value.length === data.countPerPage,
                 totalProducts: data.countAll,
             });
-            if(filters.search !== null && filters.search !== undefined) {
+            if (filters.search !== null && filters.search !== undefined) {
                 this.setState({
                     searchKeyWord: filters.search
                 });
@@ -109,8 +99,8 @@ class MarketplaceSearch extends Component {
 
     componentDidMount() {
         if (this.screenWidth < 700) {
-            this.setState({mobileClassViewList: 'mobileHide'})
-            this.setState({mobileClassSideFilter: ''})
+            this.setState({ mobileClassViewList: 'mobileHide' })
+            this.setState({ mobileClassSideFilter: '' })
         }
         this.getProducts(this.state.productFilters);
     }
@@ -119,17 +109,17 @@ class MarketplaceSearch extends Component {
         if (this.screenWidth < 700) {
             this.mobileSwitchHiddenComponent();
         }
-        this.setState({viewListRender: viewList})
+        this.setState({ viewListRender: viewList })
     }
 
     mobileSwitchHiddenComponent() {
-        this.setState({mobileClassViewList: ''})
-        this.setState({mobileClassSideFilter: 'mobileHide'})
+        this.setState({ mobileClassViewList: '' })
+        this.setState({ mobileClassSideFilter: 'mobileHide' })
     }
 
     processViewData(viewData, viewListRender) {
-        this.setState({viewListData: viewData});
-        this.setState({filterQueryResponse: viewData});
+        this.setState({ viewListData: viewData });
+        this.setState({ filterQueryResponse: viewData });
         this.changeViewList(viewListRender);
     }
     /**
@@ -145,10 +135,9 @@ class MarketplaceSearch extends Component {
     loadMoreProducts = async () => {
         try {
             const nextPage = this.state.currentPage + 1;
-            const { data } = await API.get('/api/products',{
+            const { data } = await API.get('/api/products', {
                 ...this.state.productSortBar,
                 ...this.state.productFilterBar,
-                // ...this.state.categoryBar,
                 page: nextPage
             });
             this.setState({
@@ -159,7 +148,7 @@ class MarketplaceSearch extends Component {
                 currentPage: nextPage,
                 hasMoreProducts: nextPage < data.totalPages
             })
-        } catch(error) {
+        } catch (error) {
             this.setState({
                 productFetchError: error
             })
@@ -182,21 +171,19 @@ class MarketplaceSearch extends Component {
             }}>
                 <div className="main">
                     <div className="sticky-top bg-white">
-                        <Header/>
-                        <HeaderCategories processViewData={this.processViewData.bind(this)}
-                                          changeCategoryBar={this.changeCategoryBar}/>
+                        <Header />
                     </div>
                     <div className="container-fluid">
                         <div className="row">
                             <div className={'col-md-3 px-0 zi-0 position-relative' + this.state.mobileClassSideFilter}>
                                 <FilterSidebar generateLink={this.props.generateLink}
-                                               processViewData={this.processViewData.bind(this)}
-                                               changeViewList={this.changeViewList.bind(this)}
-                                               changeProductFilterBar={this.changeProductFilterBar}
-                                               changeBrandsFilterBar={this.changeBrandsFilterBar}/>
+                                    processViewData={this.processViewData.bind(this)}
+                                    changeViewList={this.changeViewList.bind(this)}
+                                    changeProductFilterBar={this.changeProductFilterBar}
+                                    changeBrandsFilterBar={this.changeBrandsFilterBar} />
                             </div>
                             <div className={'col-md-9 px-0 ' + this.state.mobileClassViewList}>
-                                 <ViewList />
+                                <ViewList />
                             </div>
                         </div>
                     </div>
