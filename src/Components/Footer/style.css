@@ -1,0 +1,22 @@
+.footer {
+    padding: 30px 0;
+}
+.footer a {
+    font-size: 17px;
+    text-decoration: none;
+    color: #fff;
+    transition: all ease-in-out .25s
+}
+.footer a:hover {
+    color: #fc008a;
+}
+.footer .logo {
+    width: 220px;
+    height: auto;
+}
+.footer .footer-heading {
+    color: #8f8aa3;
+    font-size: 17px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
