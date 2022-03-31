@@ -25,7 +25,7 @@ const ViewList = () => {
   const { order_by, sort_by } = productFilters;
   return (
     <div className="view-list">
-      <div className="d-flex bg-white justify-content-between align-items-center mb-3 sticky-top" style={{ top: '139px'}}>
+      <div className="d-flex bg-white justify-content-between align-items-center mb-3 sticky-top" style={{ top: '67px'}}>
         <div className="d-flex ai-c">
           <span className="pe-1">Sorty by</span>
           <Dropdown

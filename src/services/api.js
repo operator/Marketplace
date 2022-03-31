@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const { 
   REACT_APP_API_TOKEN, 
-  REACT_APP_API_BASE_URL = 'https://operator-node-app-32192-prod.herokuapp.com' 
+  REACT_APP_API_BASE_URL = 'https://api.operator.com/' 
 } = process.env;
 
 axios.defaults.baseURL = REACT_APP_API_BASE_URL
