@@ -3,7 +3,6 @@ import Header from '../../Components/Header/Header'
 import ProductDetailsView from '../../Components/ProductDetailsView/ProductDetailsView'
 import APIProvider from '../../Contexts/APIContext';
 import API from '../../services/api';
-import axios from 'axios';
 import queryString from 'query-string';
 
 function getQueryString(_url) {
@@ -88,7 +87,6 @@ class ProductDetails extends Component {
     render() {
         return (
             <div className="main">
-                <Header />
                 <APIProvider.Provider value={{
                     products: this.state.products,
                     product: this.state.product,
@@ -96,6 +94,7 @@ class ProductDetails extends Component {
                     loadingProduct: this.state.productLoading,
                     getProducts: this.getProducts,
                 }} >
+                    <Header />
                     <ProductDetailsView />
                 </APIProvider.Provider>
             </div>

@@ -171,7 +171,7 @@ class MarketplaceSearch extends Component {
             }}>
                 <div className="main">
                     <div className="sticky-top bg-white">
-                        <Header />
+                        <Header searchMode='change' />
                     </div>
                     <div className="container-fluid">
                         <div className="row">
