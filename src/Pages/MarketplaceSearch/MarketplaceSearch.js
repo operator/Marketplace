@@ -69,7 +69,7 @@ class MarketplaceSearch extends Component {
                 })
             }
             const { data } = await API.get('/api/products',
-                Object.assign(this.state.productFilterBar, this.state.productSortBar, this.state.brandsFilterBar)
+                Object.assign(this.state.productFilterBar, this.state.productSortBar, this.state.brandsFilterBar, this.state.productFilters)
             );
             this.setState({
                 products: data.value,
@@ -171,7 +171,7 @@ class MarketplaceSearch extends Component {
             }}>
                 <div className="main">
                     <div className="sticky-top bg-white">
-                        <Header />
+                        <Header searchMode='change' />
                     </div>
                     <div className="container-fluid">
                         <div className="row">
