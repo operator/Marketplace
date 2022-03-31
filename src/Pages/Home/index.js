@@ -24,37 +24,24 @@ const newArrivalLink = '/products?order_by=DESC&sort_by=productCreatedAt'
 const navElements = [
 	{
 		text: 'New Arrivals',
-    url: newArrivalLink
+		url: newArrivalLink
 	},
-  {
-    text: 'Top Sellers',
-    url: '#'
-  },
-  {
-    text: 'Our Favorites',
-    url: '#'
-  },
-  {
-    text: 'Suprise Me',
-    url: '#'
-  },
-  {
-    text: 'Browse All',
-    url: '#'
-  }
-];
-
-const categories = [
-	'Electronics',
-	'Collectibles & Art',
-	'Fashion',
-	'Toys & Hobbies',
-	'Sporting Goods',
-	'Movies & Music',
-	'Books',
-	'Home & Garden',
-	'Business & Industrial',
-	'Others',
+	{
+		text: 'Top Sellers',
+		url: '#'
+	},
+	{
+		text: 'Our Favorites',
+		url: '#'
+	},
+	{
+		text: 'Suprise Me',
+		url: '#'
+	},
+	{
+		text: 'Browse All',
+		url: '#'
+	}
 ];
 
 const brands = [
@@ -105,51 +92,51 @@ const BrandCard = ({
 };
 
 const ProductBlockLoader = () => {
-  return <div className="card border-0">
-    <div className="placeholder-glow">
-      <div className="placeholder p-5 w-100" />
-    </div>
-    <div className="card-body">
-      <h5 className="card-title placeholder-glow">
-        <span className="placeholder col-6"></span>
-      </h5>
-      <p className="card-text placeholder-glow">
-        <span className="placeholder col-7 me-1"></span>
-        <span className="placeholder col-4"></span>
-        <span className="placeholder col-4 me-1"></span>
-        <span className="placeholder col-6"></span>
-        <span className="placeholder col-8"></span>
-      </p>
-    </div>
-  </div>
+	return <div className="card border-0">
+		<div className="placeholder-glow">
+			<div className="placeholder p-5 w-100" />
+		</div>
+		<div className="card-body">
+			<h5 className="card-title placeholder-glow">
+				<span className="placeholder col-6"></span>
+			</h5>
+			<p className="card-text placeholder-glow">
+				<span className="placeholder col-7 me-1"></span>
+				<span className="placeholder col-4"></span>
+				<span className="placeholder col-4 me-1"></span>
+				<span className="placeholder col-6"></span>
+				<span className="placeholder col-8"></span>
+			</p>
+		</div>
+	</div>
 }
 
 const Home = () => {
-  const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [productLoadError, setProductLoadError] = useState(null);
-  const navigate = useNavigate();
-  const getNewArrivalProducts = async () => {
-    try {
-      setLoading(true);
-    const { data } = await API.get('/api/products', {
-      limit: 12,
-      order_by: 'DESC',
-      sort_by: 'productCreatedAt'
-    });
-    setLoading(false);
-    setProducts(data.value)
-    } catch(error) {
-      setProductLoadError(error);
-    }
-  }
-  useEffect(() => {
-    getNewArrivalProducts();
-  }, []);
+	const [loading, setLoading] = useState(false);
+	const [products, setProducts] = useState([]);
+	const [productLoadError, setProductLoadError] = useState(null);
+	const navigate = useNavigate();
+	const getNewArrivalProducts = async () => {
+		try {
+			setLoading(true);
+			const { data } = await API.get('/api/products', {
+				limit: 12,
+				order_by: 'DESC',
+				sort_by: 'productCreatedAt'
+			});
+			setLoading(false);
+			setProducts(data.value)
+		} catch (error) {
+			setProductLoadError(error);
+		}
+	}
+	useEffect(() => {
+		getNewArrivalProducts();
+	}, []);
 
-  const onSearchSubmit = (value) => {
-    navigate(`/products?search=${value}`)
-  }
+	const onSearchSubmit = (value) => {
+		navigate(`/products?search=${value}`)
+	}
 
 	return (
 		<>
@@ -249,9 +236,9 @@ const Home = () => {
 						</a>
 					</div>
 					<div className="row g-3">
-            {loading && !products.length && Array.from({ length: 6 }).map((_, index) => <div key={index} className="col-12 col-md-4 col-lg-2">
-              <ProductBlockLoader />
-            </div>)}
+						{loading && !products.length && Array.from({ length: 6 }).map((_, index) => <div key={index} className="col-12 col-md-4 col-lg-2">
+							<ProductBlockLoader />
+						</div>)}
 						{products.slice(0, 6).map((productData, index) => (
 							<div key={index} className="col-12 col-md-4 col-lg-2">
 								<ProductBlock loading={loading} productData={productData} />
@@ -267,9 +254,9 @@ const Home = () => {
 						</a>
 					</div>
 					<div className="row g-3">
-           {loading && !products.length && Array.from({ length: 6 }).map((_, index) => <div key={index} className="col-12 col-md-4 col-lg-2">
-              <ProductBlockLoader />
-            </div>)}
+						{loading && !products.length && Array.from({ length: 6 }).map((_, index) => <div key={index} className="col-12 col-md-4 col-lg-2">
+							<ProductBlockLoader />
+						</div>)}
 						{products.slice(6, 12).map((productData, index) => (
 							<div key={index} className="col-12 col-md-4 col-lg-2">
 								<ProductBlock loading={loading} productData={productData} />
@@ -277,7 +264,7 @@ const Home = () => {
 						))}
 					</div>
 				</div>
-				<div className="mt-4">
+				<div className="mt-4 mb-5">
 					<div className="d-flex align-items-center justify-content-between">
 						<h2>Our Favorite Brands</h2>
 						<a href="#" className="text-decoration-none link-arrow">
@@ -288,16 +275,6 @@ const Home = () => {
 						{brands.map(({ logo, bgUrl, products }, key) => <div key={key} className="col-12 col-md-4">
 							<BrandCard logo={logo} bgUrl={bgUrl} products={products} />
 						</div>)}
-					</div>
-				</div>
-				<div className="mt-4">
-					<h2>Shop By Category</h2>
-					<div className="row g-3">
-						{categories.map((category) => (
-							<div key={category} className="col-6 col-md-3">
-								<div className="bg-light p-4 rounded text-center h-100 align-items-center d-flex justify-content-center">{category}</div>
-							</div>
-						))}
 					</div>
 				</div>
 			</div>
