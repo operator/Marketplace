@@ -36,7 +36,8 @@ const Header = ({
           <SearchInput onSubmit={onSearchSubmitHandler} onSearch={searchHandler} value={searchKeyWord} />
           <Button className={`w-100 d-${breakPoint}-none mt-2 align-self-end`} variant="primary">My Wallet</Button>
         </Navbar.Collapse>
-        <Button className={`d-none d-${breakPoint}-block`} variant="primary">My Wallet</Button>
+        {/* Disabled for future development */}
+        {/* <Button className={`d-none d-${breakPoint}-block`} variant="primary">My Wallet</Button> */}
       </Container>
     </Navbar>
   );
