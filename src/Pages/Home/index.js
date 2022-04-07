@@ -11,7 +11,6 @@ import byOperatorLogo from '../../Assets/byOperator.svg';
 import SearchInput from '../../Components/Header/SearchInput';
 import sponsoredBillboard from '../../Assets/sponsoredBillboard.svg';
 import magicMind from '../../Assets/magicMind.svg';
-import ProductBlock from '../../Components/ViewList/ProductBlock/ProductBlock';
 import Footer from '../../Components/Footer';
 import bgElderStatesman from '../../Assets/bg-elder-statesman.png';
 import bgSugarpill from '../../Assets/bg-sugarpill.png';
@@ -20,6 +19,8 @@ import logoElderStatesman from '../../Assets/logo-elder-statesman.png';
 import logoSugarpill from '../../Assets/logo-sugarpill.png';
 import logoSusaneKaufmann from '../../Assets/logo-susane-kaufmann.png';
 import API from '../../services/api';
+import ProductCard from '../../Components/ProductCard';
+import ProductCardLoader from '../../Components/ProductCardLoader';
 
 const newArrivalLink = '/products?order_by=DESC&sort_by=productCreatedAt'
 
@@ -302,12 +303,12 @@ const Home = () => {
               !products.length &&
               Array.from({ length: 6 }).map((_, index) => (
                 <div key={index} className="col-12 col-md-4 col-lg-2">
-                  <ProductBlockLoader />
+                  <ProductCardLoader />
                 </div>
               ))}
-            {products.slice(0, 6).map((productData, index) => (
+            {products.slice(0, 6).map((product, index) => (
               <div key={index} className="col-12 col-md-4 col-lg-2">
-                <ProductBlock loading={loading} productData={productData} />
+                <ProductCard product={product} />
               </div>
             ))}
           </div>
@@ -324,12 +325,12 @@ const Home = () => {
               !products.length &&
               Array.from({ length: 6 }).map((_, index) => (
                 <div key={index} className="col-12 col-md-4 col-lg-2">
-                  <ProductBlockLoader />
+                  <ProductCardLoader />
                 </div>
               ))}
-            {products.slice(6, 12).map((productData, index) => (
+            {products.slice(6, 12).map((product, index) => (
               <div key={index} className="col-12 col-md-4 col-lg-2">
-                <ProductBlock loading={loading} productData={productData} />
+                <ProductCard product={product} />
               </div>
             ))}
           </div>

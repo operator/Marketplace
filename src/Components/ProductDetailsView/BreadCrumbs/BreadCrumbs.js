@@ -8,7 +8,7 @@ const BreadCrumbs = () => {
   const { product } = useContext(APIContext);
 
     return (
-      <div className="flex-column ai-c col-9">
+      <div className="flex-column ai-c col-12 col-md-9">
         <div className="d-flex ai-c category-trail">
           {/*
             Commented out until category DB value

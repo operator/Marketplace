@@ -1,0 +1,30 @@
+.product-card {
+  cursor: pointer;
+  width: 206px;
+  .product-card_img-wrapper {
+    width: 206px;
+    height: 206px;
+    background-color: rgba(7, 7, 44, 0.03);
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+  .product-card_title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+  }
+  .product-card_details {
+    flex: 1;
+  }
+  @media only screen and (max-width: 768px) {
+    .product-card_img-wrapper {
+      width: 128px !important;
+      height: 128px !important;
+    }
+    width: unset;
+  }
+}
