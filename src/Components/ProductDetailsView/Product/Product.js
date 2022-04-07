@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import classnames from 'classnames';
+import { groupBy } from  'lodash';
 
 import './Product.css';
 import APIContext from '../../../Contexts/APIContext';
@@ -19,15 +20,17 @@ export default function Product() {
       onMouseLeave={() => showMainImage()}
     />
   ));
-
   const showImageLarge = (imageSrc) => {
     setMainImage(imageSrc);
   };
   const showMainImage = () => {
     setMainImage(mainImageOriginal);
   };
-
   const buyCaption = product.quantity ? 'Buy now' : 'Currently Unavailable';
+  const groupedVariants = groupBy(product?.variants?.map((variant) => ({
+      ...variant,
+      groupBy: variant?.meta_data[0]?.key
+    })), 'groupBy');
 
   return (
     <div className="product d-flex jc-sb">
@@ -55,9 +58,9 @@ export default function Product() {
           </a>
         </div>
         <p>{product.title}</p>
-        <p>
-          Size: <span className="fw-bold">{product.description}</span>
-        </p>
+        {Object.keys(groupedVariants).map(group => <p key={group}>
+          {group}: <span className="fw-bold">{groupedVariants[group].map((groupItem) => groupItem.title).join(',')}</span>
+        </p>)}
       </div>
     </div>
   );
