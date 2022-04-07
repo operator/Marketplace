@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 import './ProductsList.css'
 import APIContext from '../../../Contexts/APIContext';
-import ProductBlock from '../ProductBlock/ProductBlock';
+import ProductCard from '../../ProductCard';
 import Loader from '../../Loader';
 import ProductError from '../ProductError';
 
@@ -31,11 +31,9 @@ const ProductsList = () => {
              search: ''
            })}
           />}
-      <div className="product-scroll">
-        <div className="products-wrapper">
-          {products.map((product, index) => <ProductBlock key={index} productData={product} />)}
+        <div className="row gy-5 gx-0 flex-wrap justify-content-between">
+          {products.map((product, index) => <ProductCard key={index} product={product} />)}
         </div>
-      </div>
     </InfiniteScroll>
   );
 };

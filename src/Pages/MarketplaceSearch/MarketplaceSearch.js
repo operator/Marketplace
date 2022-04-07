@@ -177,11 +177,11 @@ class MarketplaceSearch extends Component {
           productFilters: this.state.productFilters,
         }}
       >
-        <div className="main">
+        <div className="main product-catalog">
           <div className="sticky-top bg-white">
             <Header searchMode="change" />
           </div>
-          <div className="container-fluid">
+          <div className="container-xxl">
             <div className="row">
               <div
                 className={

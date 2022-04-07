@@ -1,0 +1,14 @@
+.product-card-loader {
+  width: 206px;
+  .product-card-loader_img {
+    height: 206px;
+    width: 206px;
+  }
+  @media only screen and (max-width: 768px) {
+    .product-card-loader_img {
+      width: 128px;
+      height: 128px;
+    }
+    width: 100%;
+  }
+}
