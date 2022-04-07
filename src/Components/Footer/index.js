@@ -5,7 +5,7 @@ const Footer = () => {
     <div className="container text-white py-3">
       <div className="d-flex flex-column flex-md-row justify-content-between">
         <div className="text-center col-md-4 text-md-start mb-4 pe-3">
-          <img class="logo" src={operator} alt="Operator" />
+          <img className="logo" src={operator} alt="Operator" />
         </div>
         <div className="col-md-8">
           <div className="row text-center text-md-start g-4">

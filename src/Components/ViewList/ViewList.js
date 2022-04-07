@@ -27,7 +27,7 @@ const ViewList = () => {
     <div className="view-list">
       <div className="d-flex bg-white justify-content-between align-items-center mb-3 sticky-top" style={{ top: '67px'}}>
         <div className="d-flex ai-c">
-          <span className="pe-1">Sorty by</span>
+          <span className="pe-1">Sorted by</span>
           <Dropdown
             className="fw-bold"
             options={SORT_BY_OPTIONS}

@@ -1,0 +1,24 @@
+$sidebar-width: 320px;
+.product-catalog {
+  .sidebar {
+    max-width: $sidebar-width;
+  }
+  .content {
+    max-width: calc(100% - $sidebar-width);
+  }
+  .product-card {
+    width: 189px
+  }
+  @media only screen and (max-width: 576px) {
+    .sidebar, .content {
+      max-width: 100%;
+    }
+    .product-card {
+      width: 100%;
+    }
+  }
+  .product-card_img-wrapper {
+    width: 189px;
+    height: 189px;
+  }
+}

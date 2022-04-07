@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
+import './style.scss'
+
 const CheckBoxGroup = ({
   options,
   onChange
@@ -25,7 +27,7 @@ const CheckBoxGroup = ({
     }
   }
 
-  return <Form>
+  return <Form className="check-box-group">
     {options.map(({ label, value }) => <Form.Check
       className="mb-3"
       type={'checkbox'}
