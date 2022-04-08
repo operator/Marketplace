@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import './styles.scss';
 import API from '../../../services/api';
 import CheckBoxGroup from '../../CheckBoxGroup';
 
-const FilterBrand = (props) => {
+const FilterBrand = ({
+  changeBrandsFilterBar
+}) => {
   const [brands, setBrands] = useState([]);
   const [fn, setFn] = useState(false);
   const [loading, setLoading] = useState(false);
-
-
+  const [searchParams] = useSearchParams();
   const getBrands = async (search) => {
     setFn(true);
     try {
@@ -23,6 +26,10 @@ const FilterBrand = (props) => {
     }
   };
 
+  const onChangeHandler = useCallback((values) => {
+    changeBrandsFilterBar(values);
+  }, [changeBrandsFilterBar])
+
   if (!fn) {
     getBrands();
   }
@@ -34,12 +41,24 @@ const FilterBrand = (props) => {
   return (
     <CheckBoxGroup
       options={brands.map((brand) => ({
-        label: brand,
-        value: brand,
+        label: brand?.vendor || brand,
+        value: brand?.vendor || brand,
       }))}
-      onChange={props.changeBrandsFilterBar}
+      onChange={onChangeHandler}
+      value={searchParams.getAll('brand[]').map(brand => ({
+        label: brand,
+        value: brand
+      }))}
     />
   );
 };
 
 export default FilterBrand;
+
+FilterBrand.defaultProps = {
+  changeBrandsFilterBar: () => {}
+}
+
+FilterBrand.propTypes = {
+  changeBrandsFilterBar: PropTypes.func
+}
