@@ -7,9 +7,10 @@ import './style.scss'
 
 const CheckBoxGroup = ({
   options,
+  value = [],
   onChange
 }) => {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState(value);
 
   useEffect(() => {
     onChange(selected)
@@ -35,6 +36,7 @@ const CheckBoxGroup = ({
       id={value}
       onClick={() => onCheck(value)}
       key={value}
+      checked={selected.find(option => option.value === value)}
     />)}
   </Form>
 };
@@ -43,10 +45,12 @@ export default CheckBoxGroup;
 
 CheckBoxGroup.propTypes = {
   options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)),
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  value: PropTypes.arrayOf(PropTypes.any)
 }
 
 CheckBoxGroup.defaultProps = {
   options: [],
+  value: [],
   onChange: () => { }
 }

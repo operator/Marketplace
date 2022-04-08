@@ -11,14 +11,14 @@ const ProductCard = ({ product, className }) => {
   }
   return (
     <div onClick={onClick} className={classnames("product-card d-flex flex-md-column align-items-center", className)}>
-      <div className="product-card_img-wrapper overflow-hidden">
+      <div className="product-card_img-wrapper overflow-hidden rounded-2">
         <img src={product.images[0].src} alt="product" />
       </div>
       <div className="d-flex flex-column product-card_details ms-2">
         <span className="fw-bolder mb-2">
           {moneyFormatter(product.maxPrice, product.currencyCode)}
         </span>
-        <span className="product-card_title mb-2">{product.title}</span>
+        <span className="product-card_title mb-2 fw-600 text-light-primary">{product.title}</span>
         <p className="small">
           Fullfilled by{' '}
           <a className="text-secondary" href="#">
