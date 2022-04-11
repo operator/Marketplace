@@ -9,7 +9,6 @@ import APIContext from '../../Contexts/APIContext';
 
 const ProductDetailsView = () => {
   const { loadingProduct } = useContext(APIContext);
-
   return (
     <div className="container product-details-page">
       <div>

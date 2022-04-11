@@ -6,7 +6,7 @@ import ProductCard from '../../ProductCard';
 import ProductCardLoader from '../../ProductCardLoader';
 
 const ProductsListFourProducts = () => {
-  let { products, loadingProducts } = useContext(APIContext);
+  let { products, loadingProducts, product } = useContext(APIContext);
 
   const WrappedLoader = ({ className }) => {
     return (
@@ -25,8 +25,8 @@ const ProductsListFourProducts = () => {
         <WrappedLoader />
       ) : (
         <div className="d-flex justify-content-center align-items-center mt-md-3 w-100 flex-wrap">
-            {products.slice(0, 4).map((product) => (
-              <ProductCard key={product.productID} product={product} className="me-md-3 mb-3" />
+            {products.slice(0, 5).map((p) => (
+              product.productID !== p.productID && <ProductCard key={p.productID} product={p} className="me-md-3 mb-3" />
             ))}
         </div>
       )}
