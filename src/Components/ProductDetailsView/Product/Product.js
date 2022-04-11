@@ -8,9 +8,9 @@ import moneyFormatter from '../../../utilities/moneyFormatter';
 
 export default function Product() {
   const { product } = useContext(APIContext);
-  const [mainImage, setMainImage] = useState(product.images[0].src);
-  const mainImageOriginal = product.images[0].src;
-  const additionalImages = product.images.map((image, key) => (
+  const [mainImage, setMainImage] = useState(product?.images && product?.images[0]?.src);
+  const mainImageOriginal = product?.images && product.images[0].src;
+  const additionalImages = product?.images && product.images.map((image, key) => (
     <img
       key={'image' + key}
       className="additional-images__img"
@@ -26,7 +26,7 @@ export default function Product() {
   const showMainImage = () => {
     setMainImage(mainImageOriginal);
   };
-  const buyCaption = product.quantity ? 'Buy now' : 'Currently Unavailable';
+  const buyCaption = product.quantity && product.checkoutLink ? 'Buy now' : 'Currently Unavailable';
   const groupedVariants = groupBy(product?.variants?.map((variant) => ({
       ...variant,
       groupBy: variant?.meta_data[0]?.key
@@ -52,7 +52,7 @@ export default function Product() {
         <h5 className="fw-bold">{moneyFormatter(product.maxPrice, product.currencyCode)}</h5>
         <div className="d-flex margin-bottom-extra">
           <a className={classnames("btn black-button text-center", {
-            'opacity-50': !product.quantity
+            'opacity-50': !product.quantity || !product.checkoutLink
           })} href={product.quantity ? product.checkoutLink : null} target="_blank" rel='noreferrer'>
             {buyCaption}
           </a>

@@ -34,7 +34,7 @@ const ProductDetails = () => {
     setProductsLoading(false);
   };
 
-  const getProduct = useCallback(async (productID) => {
+  const getProductByID = useCallback(async() => {
     setProductLoading(true)
     API.get('/api/product', {
       productID: searchParams.get('product'),
@@ -42,13 +42,29 @@ const ProductDetails = () => {
       const productData = response.data.value;
       setProduct(productData)
       setProductLoading(false)
-      getProducts({search: productData.title});
+      getProducts({ search: productData.title });
     });
   }, [searchParams]);
 
+  const getRandomProduct = useCallback(async() => {
+    try {
+      setProductLoading(true);
+      const { data: { product } } = await API.get('/api/product/random');
+      setProduct(product);
+      getProducts({ search: product.title });
+    } catch(error) {
+    } finally {
+      setProductLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    getProduct();
-  }, [getProduct])
+    if(searchParams.get('product')) {
+      getProductByID();
+    } else {
+      getRandomProduct();
+    }
+  }, [getProductByID, getRandomProduct, searchParams])
 
   return (
     <div className="main">

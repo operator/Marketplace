@@ -21,7 +21,7 @@ const navElements = [
   },
   {
     text: 'Suprise Me',
-    url: '/suprise-me',
+    url: '/product-details',
   },
   {
     text: 'Browse All',
