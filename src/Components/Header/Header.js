@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import PropTypes from 'prop-types';
 
 import Logo from '../Logo'
 import './Header.css'
@@ -30,7 +31,7 @@ const Header = ({
   return (
     <Navbar expand={breakPoint}>
       <Container fluid>
-        <Navbar.Brand href="/"><Logo /></Navbar.Brand>
+        <Navbar.Brand as={Link} to="/"><Logo /></Navbar.Brand>
         <Navbar.Toggle className="shadow-none p-0 border-0" aria-controls="navbarScroll" />
         <Navbar.Collapse className="flex-column" id="navbarScroll">
           <SearchInput onSubmit={onSearchSubmitHandler} onSearch={searchHandler} value={searchKeyWord} />
@@ -46,5 +47,9 @@ const Header = ({
 export default Header;
 
 Header.propTypes = {
+  searchMode: PropTypes.string
+};
+
+Header.defaultProps = {
   searchMode: 'submit'
 };
