@@ -29,10 +29,7 @@ const ProductDetails = () => {
   const [searchParams] = useSearchParams();
 
   const getProducts = async (filters = {}) => {
-    const { data } = await API.get('/api/products', {
-      price_max: 10000000000,
-      ...filters,
-    });
+    const { data } = await API.get('/api/products', { ...filters });
     setProducts(data.value);
     setProductsLoading(false);
   };
@@ -45,7 +42,7 @@ const ProductDetails = () => {
       const productData = response.data.value;
       setProduct(productData)
       setProductLoading(false)
-      getProducts(productData.title);
+      getProducts({search: productData.title});
     });
   }, [searchParams]);
 
