@@ -1,16 +1,25 @@
 import React, { useContext, useState } from 'react';
 import classnames from 'classnames';
-import { groupBy } from  'lodash';
 
 import './Product.css';
 import APIContext from '../../../Contexts/APIContext';
 import moneyFormatter from '../../../utilities/moneyFormatter';
 
+function OptionSelector({
+  label,
+  className
+}) {
+  return <button className={classnames("btn btn-option-selector me-2", className)}>
+    {label}
+  </button>
+}
+
 export default function Product() {
   const { product } = useContext(APIContext);
-  const [mainImage, setMainImage] = useState(product?.images && product?.images[0]?.src);
-  const mainImageOriginal = product?.images && product.images[0].src;
-  const additionalImages = product?.images && product.images.map((image, key) => (
+  const images = product?.images?.length ? product?.images : product.images_scrapeds
+  const mainImageOriginal = (images && images[0]?.src);
+  const [mainImage, setMainImage] = useState(mainImageOriginal);
+  const additionalImages = images && images.map((image, key) => (
     <img
       key={'image' + key}
       className="additional-images__img"
@@ -27,11 +36,6 @@ export default function Product() {
     setMainImage(mainImageOriginal);
   };
   const buyCaption = product.quantity && product.checkoutLink ? 'Buy now' : 'Currently Unavailable';
-  const groupedVariants = groupBy(product?.variants?.map((variant) => ({
-      ...variant,
-      groupBy: variant?.meta_data[0]?.key
-    })), 'groupBy');
-
   return (
     <div className="product d-flex jc-sb">
       <div className="content col-5">
@@ -58,9 +62,14 @@ export default function Product() {
           </a>
         </div>
         <p>{product.title}</p>
-        {Object.keys(groupedVariants).map(group => <p key={group}>
-          {group}: <span className="fw-bold">{groupedVariants[group].map((groupItem) => groupItem.title).join(',')}</span>
-        </p>)}
+        {product?.meta_data?.map(({ key, values = [] }) => <div key={key}>
+          <label className="mb-2">{key}</label>
+          <div className="d-flex">
+            {values.map((value, index) => <OptionSelector key={index} className={classnames({
+              'border-dashed': index === values.length - 1
+            })} label={value} />)}
+          </div>
+        </div>)}
       </div>
     </div>
   );
