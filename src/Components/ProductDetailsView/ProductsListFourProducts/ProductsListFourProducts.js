@@ -25,7 +25,7 @@ const ProductsListFourProducts = () => {
         <WrappedLoader />
       ) : (
         <div className="d-flex justify-content-center align-items-center mt-md-3 w-100 flex-wrap">
-            {products.slice(0, 5).map((p) => (
+            {products.slice(0, 4).map((p) => (
               product.productID !== p.productID && <ProductCard key={p.productID} product={p} className="me-md-3 mb-3" />
             ))}
         </div>
