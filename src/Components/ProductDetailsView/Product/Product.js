@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classnames from 'classnames';
+import { groupBy } from  'lodash';
 
 import './Product.css';
 import APIContext from '../../../Contexts/APIContext';
@@ -34,8 +35,50 @@ export default function Product() {
   };
   const showMainImage = () => {
     setMainImage(mainImageOriginal);
-  };
-  const buyCaption = product.quantity && product.checkoutLink ? 'Buy now' : 'Currently Unavailable';
+  }; console.log('PRODUCT', product);
+  const firstAvailableVariant = product?.variants?.find(obj => obj.quantityAvailable > 0);
+  const buyCaption = !!firstAvailableVariant ? 'Buy now' : 'Currently Unavailable';
+  const groupedVariants = groupBy(product?.variants?.map((variant) => ({
+      ...variant,
+      groupBy: variant?.meta_data[0]?.key
+    })), 'groupBy');
+
+  const [selected, setSelected] = useState({});
+  const productOptions = {};
+  let optionSelector = '';
+  if(!!product.meta_data) {
+    let refOptionName = '';
+    product.meta_data.forEach((optionData, index) => {
+      if(optionData.key !== refOptionName) {
+        refOptionName = optionData.key;
+        productOptions[optionData.key] = [];
+      }
+      productOptions[optionData.key].push(optionData.value);
+    });
+    optionSelector = Object.keys(productOptions).map((optionName, index) => (
+      <div className="option-group">
+        <label>{optionName}</label>
+        {productOptions[optionName].map((option, index) => (
+          <a
+            href="javascript: void(0)"
+            className={selected[optionName] === index ? 'selected' : ''}
+            onClick={() => { setSelected(prev => ({ ...prev, [optionName]: index })) }}
+          >
+            {option}
+          </a>
+        ))}
+      </div>
+    ));
+  }
+
+  useEffect(() => {
+    const selectedVariant = Object.keys(productOptions).reduce(( accumulator, key, index ) => {
+      accumulator[key] = 0;
+      return accumulator;
+    }, {})
+    setSelected(selectedVariant);
+  }, [])
+
   return (
     <div className="product d-flex jc-sb">
       <div className="content col-5">
@@ -54,6 +97,8 @@ export default function Product() {
         <h1 className="product-description-header">{product.vendor}</h1>
         <p>{product.title}</p>
         <h5 className="fw-bold">{moneyFormatter(product.maxPrice, product.currencyCode)}</h5>
+        <hr />
+        <div className="product-options-selector">{optionSelector || ''}</div>
         <div className="d-flex margin-bottom-extra">
           <a className={classnames("btn black-button text-center", {
             'opacity-50': !product.quantity || !product.checkoutLink
