@@ -269,7 +269,8 @@
 }
 .btn-option-selector:hover {
   border: solid 2px #07072C;
+  margin: 0px;
 }
-.border-dashed {
+.btn-option-selector:disabled {
   border-style: dashed;
 }

@@ -10,7 +10,7 @@ const ProductCard = ({ product, className }) => {
     window.location = `/product-details?product=${product.productID}`;
   }
   return (
-    <div onClick={onClick} className={classnames("product-card d-flex flex-md-column align-items-center", className)}>
+    <div onClick={onClick} className={classnames("product-card d-flex flex-md-column", className)}>
       <div className="product-card_img-wrapper overflow-hidden rounded-2">
         <img src={product.images[0].src} alt="product" />
       </div>
