@@ -21,4 +21,30 @@ $sidebar-width: 320px;
     width: 189px;
     height: 189px;
   }
+  .product-card_variants {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 12px;
+
+    div {
+      background: #CCC none center center / cover no-repeat;
+      border-radius: 50%;
+      font-size: 0;
+      height: 16px;
+      margin: 0 5px;
+      width: 16px;
+
+      &.active {
+        outline: 1px solid #17172C;
+      }
+
+      &.more-items {
+        background: transparent none;
+        border: 0;
+        font-size: 12px;
+        line-height: 16px;
+        text-decoration: underline;
+      }
+    }
+  }
 }
