@@ -24,7 +24,12 @@ export default function Product() {
   const images = product?.images?.length ? product?.images : product.images_scrapeds
   const [mainImageOriginal, setMainImageOriginal] = useState(images && images[0]?.src);
   const [mainImage, setMainImage] = useState(mainImageOriginal);
-  const [selectedVariant, setSelectedVariant] = useState(product?.variants && product?.variants[0]);
+  const [selectedVariant, setSelectedVariant] = useState((product?.variants && product?.variants[0]) || {
+    ...product,
+    price: product.maxPrice,
+    quantityAvailable: product.quantity
+  });
+
   const additionalImages = images && images.map((image, key) => (
     <img
       key={'image' + key}
