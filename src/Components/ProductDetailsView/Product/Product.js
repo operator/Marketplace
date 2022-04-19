@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import classnames from 'classnames';
 import { xorWith, isEqual } from 'lodash';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 import './Product.css';
 import APIContext from '../../../Contexts/APIContext';
@@ -10,9 +11,20 @@ function OptionSelector({
   selected,
   label,
   className,
+  available,
+  onClick,
   ...props
 }) {
-  return <button {...props} className={classnames("btn btn-option-selector me-2 rounded-1 shadow-none", className, {
+  if(!available) {
+  return <OverlayTrigger overlay={(props) => <Tooltip className="bg-dark" {...props} >Product not available</Tooltip>}>
+    <button {...props} className={classnames("btn btn-option-selector me-2 rounded-1 shadow-none border-dashed", className, {
+    'border-primary border-2 m-0': selected
+  })}>
+    {label}
+  </button>
+  </OverlayTrigger>
+  }
+  return <button {...props} onClick={onClick} className={classnames("btn btn-option-selector me-2 rounded-1 shadow-none", className, {
     'border-primary border-2 m-0': selected
   })}>
     {label}
@@ -83,6 +95,12 @@ export default function Product() {
     .find(metaData => metaData.key === product?.meta_data[index].key))
   }
 
+  const getOptionValue = (key) => {
+    return selectedVariant?.meta_data
+    ?.find((metaData) => metaData.key === key)
+    ?.value
+  }
+
   return (
     <div className="product d-flex jc-sb">
       <div className="content col-5">
@@ -103,14 +121,14 @@ export default function Product() {
         <h5 className="fw-bold">{moneyFormatter(selectedVariant?.price, selectedVariant?.currencyCode)}</h5>
         <hr />
         {product?.meta_data?.map(({ key, values = [] }, metaIndex) => <div key={key}>
-          <label className="mb-2">{key}</label>
+          <label className="mb-2">{key}: <span className="fw-600">{getOptionValue(key)}</span></label>
           <div className="d-flex">
             {values.map((value, index) => <OptionSelector
               selected={isOptionSelected({ key, value })}
               onClick={() => onOptionSelect({ key, value })}
               key={index}
               label={value}
-              disabled={!isOptionAvailable({ key, value }, prevOptions(metaIndex))}
+              available={isOptionAvailable({ key, value }, prevOptions(metaIndex))}
             />)}
           </div>
         </div>)}
