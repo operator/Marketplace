@@ -18,6 +18,8 @@ $theme-colors: (
   light: $light,
   "light-primary": $light-primary
 );
+$tooltip-bg: $primary;
+$tooltip-color: $light;
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 // Custom Styles
@@ -102,4 +104,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.border-dashed {
+  border-style: dashed !important;
 }
