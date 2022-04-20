@@ -10,17 +10,36 @@ import './style.scss';
 const ProductCard = ({ product, className }) => {
   const navigate = useNavigate()
   const [selectedVariant, setSelectedVariant] = useState(false);
+  const [selectedColor, setSelectedColor] = useState(false)
 
   const onClick = () => {
     sessionStorage.productDetails = JSON.stringify(product);
     navigate(`/product-details?product=${product.productID}`);
   }
 
-  const productVariants = product.variants;
-  const maxVariantsToShow = 5;
+  const colorMetaName = 'Color';
+  const maxColorOptionsToShow = 5;
+
+  const getColorOptions = () => {
+    const colorOptions = product?.meta_data.filter(md => md.key === colorMetaName);
+    return !!colorOptions && !!colorOptions[0] ? colorOptions[0].values : false;
+  }
+
+  const getSelectableVariantByColorOption = colorOptionValue => {
+    return product?.variants.find(variant => variant.meta_data.find(md => md.key === colorMetaName && md.value === colorOptionValue))
+  }
+
+  const selectColorOption = colorOptionValue => {
+    setSelectedColor(colorOptionValue);
+    if(!!colorOptionValue) {
+      const selectableVariant = getSelectableVariantByColorOption(colorOptionValue);
+      setSelectedVariant(selectableVariant)
+    }
+  }
 
   useEffect(() => {
-    setSelectedVariant(productVariants[0])
+    const colorOptions = getColorOptions();
+    selectColorOption(!!colorOptions ? colorOptions[0] : false)
   }, [])
 
   return (
@@ -28,22 +47,22 @@ const ProductCard = ({ product, className }) => {
       <div onClick={onClick} className="product-card_img-wrapper overflow-hidden rounded-2">
         <img src={product.images[0].src} alt="product" />
       </div>
-      {productVariants.length > 1 ?
+      {product.variants.length > 1 && getColorOptions() ?
         <div className="product-card_variants">
-          {productVariants.slice(0, maxVariantsToShow).map((variant, i) => (
+          {getColorOptions()/*.slice(0, maxColorOptionsToShow)*/.map((colorOption, i) => (
             <div
-              className={selectedVariant.title == variant.title ? "active" : ""}
-              style={{ backgroundImage: !!variant?.image && !!variant?.image?.src ? `url(${variant?.image?.src})` : "" }}
+              className={selectedColor == colorOption ? "active" : ""}
+              style={{ backgroundImage: `url(${getSelectableVariantByColorOption(colorOption)?.image?.src})` }}
               onClick={() => {
-                setSelectedVariant(variant)
+                selectColorOption(colorOption)
               }}
             ></div>
           ))}
-          {productVariants.length > maxVariantsToShow
+          {getColorOptions().length > maxColorOptionsToShow
             ? <div
                 className="more-items"
                 onClick={onClick}
-              >{'+' + (productVariants.length - maxVariantsToShow)}</div>
+              >{'+' + (getColorOptions().length - maxColorOptionsToShow)}</div>
             : ''
           }
         </div>
