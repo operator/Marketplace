@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
 
 //Bootstrap color overrides
 
@@ -108,4 +109,8 @@ body {
 
 .border-dashed {
   border-style: dashed !important;
+}
+
+.font-display {
+  font-family: 'Playfair Display';
 }
