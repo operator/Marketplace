@@ -28,8 +28,29 @@ const ProductCard = ({ product, className }) => {
       <div onClick={onClick} className="product-card_img-wrapper overflow-hidden rounded-2">
         <img src={product.images[0].src} alt="product" />
       </div>
-      <div className="d-flex flex-column product-card_details ms-2">
-        <span className="fw-bolder mb-2" onClick={onClick}>
+      {productVariants.length > 1 ?
+        <div className="product-card_variants">
+          {productVariants.slice(0, maxVariantsToShow).map((variant, i) => (
+            <div
+              className={selectedVariant.title == variant.title ? "active" : ""}
+              style={{ backgroundImage: !!variant?.image && !!variant?.image?.src ? `url(${variant?.image?.src})` : "" }}
+              onClick={() => {
+                setSelectedVariant(variant)
+              }}
+            ></div>
+          ))}
+          {productVariants.length > maxVariantsToShow
+            ? <div
+                className="more-items"
+                onClick={onClick}
+              >{'+' + (productVariants.length - maxVariantsToShow)}</div>
+            : ''
+          }
+        </div>
+        : ""
+      }
+      <div onClick={onClick} className="d-flex flex-column product-card_details ms-2">
+        <span className="fw-bolder mb-2">
           {moneyFormatter(product.maxPrice, product.currencyCode)}
         </span>
         <span onClick={onClick} className="product-card_title mb-2 fw-600 text-light-primary">{product.title}</span>
