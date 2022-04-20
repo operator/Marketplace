@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { useState, useEffect } from 'react';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -7,10 +9,20 @@ import './style.scss';
 
 const ProductCard = ({ product, className }) => {
   const navigate = useNavigate()
+  const [selectedVariant, setSelectedVariant] = useState(false);
+
   const onClick = () => {
     sessionStorage.productDetails = JSON.stringify(product);
     navigate(`/product-details?product=${product.productID}`);
   }
+
+  const productVariants = product.variants;
+  const maxVariantsToShow = 5;
+
+  useEffect(() => {
+    setSelectedVariant(productVariants[0])
+  }, [])
+
   return (
     <div className={classnames("product-card d-flex flex-md-column", className)}>
       <div onClick={onClick} className="product-card_img-wrapper overflow-hidden rounded-2">
