@@ -31,7 +31,7 @@ const ProductCard = ({ product, className }) => {
 
   const selectColorOption = colorOptionValue => {
     setSelectedColor(colorOptionValue);
-    if(!!colorOptionValue) {
+    if(colorOptionValue) {
       const selectableVariant = getSelectableVariantByColorOption(colorOptionValue);
       setSelectedVariant(selectableVariant)
     }
@@ -51,7 +51,7 @@ const ProductCard = ({ product, className }) => {
         <div className="product-card_variants">
           {getColorOptions()/*.slice(0, maxColorOptionsToShow)*/.map((colorOption, i) => (
             <div
-              className={selectedColor == colorOption ? "active" : ""}
+              className={selectedColor === colorOption ? "active" : ""}
               style={{ backgroundImage: `url(${getSelectableVariantByColorOption(colorOption)?.image?.src})` }}
               onClick={() => {
                 selectColorOption(colorOption)
