@@ -22,3 +22,26 @@
 .logo {
   min-height: 70px;
 }
+.brand-img {
+  height: 80%;
+  object-fit: contain;
+  position: absolute;
+  top: 10%;
+  @media only screen and (max-width: 576px) {
+    height: unset;
+    position: unset;
+  }
+}
+.brand-logo {
+  height: 32px;
+  object-fit: contain;
+}
+.brand-tagline {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  mix-blend-mode: difference;
+  color: white;
+}

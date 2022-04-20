@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 
 import PageLayout from '../../Layout/Page';
-import BrandCard from '../../Components/BrandCard';
-import { brands } from '../../__mocks__';
+import BrandCard, { BrandCardLoader } from '../../Components/BrandCard';
 import ProductCard from '../../Components/ProductCard';
 import API from '../../services/api';
 import ProductCardLoader from '../../Components/ProductCardLoader';
+import useFeauredMerchants from '../../hooks/useFeaturedMerchants';
 
 const OurFavorites = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const { loading: featuredLoading, merchants: brands } = useFeauredMerchants();
   const getProducts = async () => {
     try {
       setLoading(true);
@@ -40,11 +41,16 @@ const OurFavorites = () => {
           </a>
         </div>
         <div className="row g-5">
-          {brands.map(({ logo, bgUrl, products }, key) => (
-            <div key={key} className="col-12 col-md-4">
-              <BrandCard logo={logo} bgUrl={bgUrl} products={products} />
+          {featuredLoading && Array.from({ length: 3 }).map((_, index) =>
+            <div key={index} className="col-12 col-md-4">
+              <BrandCardLoader />
             </div>
-          ))}
+          )}
+        {brands.slice(0,3).map(({ Logo, BillboardImage, products, Name }, key) => (
+              <div key={key} className="col-12 col-md-4">
+                <BrandCard logo={Logo.url} bgUrl={BillboardImage.url} products={products} name={Name} />
+              </div>
+            ))}
         </div>
       </div>
       <div className="mt-4 mb-5">

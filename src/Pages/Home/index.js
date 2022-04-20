@@ -3,74 +3,32 @@ import React, { useState, useEffect } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
+import { OverlayTrigger, Popover, Placeholder } from 'react-bootstrap';
 
 import './styles.scss';
-import sponsoredBillboard from '../../Assets/sponsoredBillboard.svg';
-import magicMind from '../../Assets/magicMind.svg';
 import API from '../../services/api';
 import ProductCard from '../../Components/ProductCard';
 import ProductCardLoader from '../../Components/ProductCardLoader';
 import PageLayout from '../../Layout/Page';
-import { brands } from '../../__mocks__';
+import BrandCard, { BrandCardLoader } from '../../Components/BrandCard';
+import useFeauredMerchants from '../../hooks/useFeaturedMerchants';
 
+const BillboardLoader = () => {
+  return <Placeholder className="mt-4" xs={12} as="div" bg="dark" animation='glow'>
+     <Placeholder className="carousel-img" xs={12} />
+  </Placeholder>
+}
 
-
-const BrandCard = ({
-	logo,
-	products,
-	bgUrl
+const BillBoardItem = ({
+  backgroundUrl,
+  imageUrl,
+  name,
+  CTALink,
+  logoUrl,
+  tagLine,
+  shopUrl
 }) => {
-	const bgActive = 'radial-gradient(100% 100% at 50% 100.09%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 100%)';
-	const bgInActive = 'radial-gradient(100% 100% at 50% 100.09%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 100%)';
-	const [active, setActive] = useState(false);
-	const onMouseEnter = () => {
-		setActive(true)
-	};
-	const onMouseLeave = () => {
-		setActive(false)
-	}
-	return <div style={{
-		backgroundImage: `${active ? bgActive : bgInActive}, url(${bgUrl})`,
-		backgroundRepeat: 'no-repeat',
-		backgroundSize: 'cover',
-	}}
-		className="brand-card p-5 h-100 d-flex align-items-end justify-content-center"
-		onMouseEnter={onMouseEnter}
-		onMouseLeave={onMouseLeave}
-	>
-		<div className="d-flex flex-column text-center">
-			<img src={logo} alt="brand-logo" className="img-fluid pb-3" />
-			<a href="#" className="btn link-arrow">View {products} products</a>
-		</div>
-	</div>
-};
-
-
-const Home = () => {
-	const [loading, setLoading] = useState(false);
-	const [products, setProducts] = useState([]);
-	const [productLoadError, setProductLoadError] = useState(null);
-	const getNewArrivalProducts = async () => {
-		try {
-			setLoading(true);
-			const { data } = await API.get('/api/products', {
-				limit: 12,
-				order_by: 'DESC',
-				sort_by: 'productCreatedAt'
-			});
-			setLoading(false);
-			setProducts(data.value)
-		} catch (error) {
-			setProductLoadError(error);
-		}
-	}
-	useEffect(() => {
-		getNewArrivalProducts();
-	}, []);
-
-
-	const popover = (
+  const popover = (
     <Popover id="popover-basic">
       <Popover.Body>
         Want to be featured on the Operator Marketplace?{' '}
@@ -85,119 +43,99 @@ const Home = () => {
     </Popover>
   );
 
+  return <>
+    <div
+      className="p-3 py-5 p-md-5 d-flex align-items-center carousel-img"
+      style={{
+        backgroundImage: `url(${backgroundUrl})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+      }}
+    >
+      <div className="row px-md-4 w-100">
+        <div className="col-8 col-md-5 d-flex flex-column justify-content-center align-items-start">
+          <img src={logoUrl} className="brand-logo mb-3 mb-md-5" alt="brand logo" />
+          <div>
+            <h2 className="mb-4 brand-tagline font-display display-md-5">
+              {tagLine}
+            </h2>
+            {shopUrl &&
+              <a href={shopUrl} target="_blank" rel="noreferrer" className="btn btn-primary col-12 col-md-8 py-2">
+                Shop {name} Now
+              </a>}
+          </div>
+        </div>
+        <div className="col-4 col-md-6 offset-md-1 d-flex justify-content-end">
+          <img
+            src={imageUrl}
+            alt="magic mind"
+            className="img-fluid brand-img"
+          />
+        </div>
+      </div>
+    </div>
+    <p className="text-end mb-5 mb-md-3">
+      Sponsored by <a href={CTALink} target="_blank" rel="noreferrer">{name}</a>
+      <OverlayTrigger rootClose overlay={popover} trigger="click">
+        <button className="p-0 border-0 bg-transparent ms-1">
+          <AiOutlineInfoCircle />
+        </button>
+      </OverlayTrigger>
+    </p>
+  </>
+}
+
+const Home = () => {
+	const [loading, setLoading] = useState(false);
+	const [products, setProducts] = useState([]);
+	const [productLoadError, setProductLoadError] = useState(null);
+  const { loading: featuredLoading, merchants: brands } = useFeauredMerchants();
+	const getNewArrivalProducts = async () => {
+		try {
+			setLoading(true);
+			const { data } = await API.get('/api/products', {
+				limit: 12,
+				order_by: 'DESC',
+				sort_by: 'productCreatedAt'
+			});
+			setLoading(false);
+			setProducts(data.value)
+		} catch (error) {
+			setProductLoadError(error);
+		} finally{
+      setLoading(false)
+    }
+	}
+
+	useEffect(() => {
+		getNewArrivalProducts();
+	}, []);
+
 	return (
     <PageLayout>
       <>
-        <Carousel variant="dark" className="mt-4" controls={false}>
-          <Carousel.Item>
-            <div
-              className="p-3 py-5 p-md-5 d-flex align-items-center carousel-img"
-              style={{
-                backgroundImage: `url(${sponsoredBillboard})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-              }}
-            >
-              <div className="row px-md-4 w-100">
-                <div className="col-8 col-md-6 d-flex flex-column justify-content-center align-items-start">
-                  <h2 className="mb-4 display-6 display-md-5">
-                    The World's First <br /> Productivity Drink
-                  </h2>
-                  <button className="btn btn-primary col-12 col-md-8 py-2">
-                    Shop MagicMind Now
-                  </button>
-                </div>
-                <div className="col-4 col-md-6 d-flex justify-content-end">
-                  <img
-                    src={magicMind}
-                    alt="magic mind"
-                    className="img-fluid brand-img"
-                  />
-                </div>
-              </div>
-            </div>
-						<p className="text-end">
-              Sponsored by <a href="#">MagicMind</a>
-              <OverlayTrigger rootClose overlay={popover} trigger="click">
-                <button className="p-0 border-0 bg-transparent ms-1">
-                  <AiOutlineInfoCircle />
-                </button>
-              </OverlayTrigger>
-            </p>
-          </Carousel.Item>
-          <Carousel.Item>
-            <div
-              className="p-3 py-5 p-md-5 d-flex align-items-center carousel-img"
-              style={{
-                backgroundImage: `url(${sponsoredBillboard})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-              }}
-            >
-              <div className="row px-md-4 w-100">
-                <div className="col-8 col-md-6 d-flex flex-column justify-content-center align-items-start">
-                  <h2 className="mb-4 display-6 display-md-5">
-                    The World's First <br /> Productivity Drink
-                  </h2>
-                  <button className="btn btn-primary col-12 col-md-8 py-2">
-                    Shop MagicMind Now
-                  </button>
-                </div>
-                <div className="col-4 col-md-6 d-flex justify-content-end">
-                  <img
-                    src={magicMind}
-                    alt="magic mind"
-                    className="img-fluid brand-img"
-                  />
-                </div>
-              </div>
-            </div>
-						<p className="text-end align-items-center justify-content-end">
-              Sponsored by <a href="#">MagicMind</a>
-              <OverlayTrigger rootClose overlay={popover} trigger="click">
-                <button className="p-0 border-0 bg-transparent ms-1">
-                  <AiOutlineInfoCircle />
-                </button>
-              </OverlayTrigger>
-            </p>
-          </Carousel.Item>
-          <Carousel.Item>
-            <div
-              className="p-3 py-5 p-md-5 d-flex align-items-center carousel-img"
-              style={{
-                backgroundImage: `url(${sponsoredBillboard})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-              }}
-            >
-              <div className="row px-md-4 w-100">
-                <div className="col-8 col-md-6 d-flex flex-column justify-content-center align-items-start">
-                  <h2 className="mb-4 display-6 display-md-5">
-                    The World's First <br /> Productivity Drink
-                  </h2>
-                  <button className="btn btn-primary col-12 col-md-8 py-2">
-                    Shop MagicMind Now
-                  </button>
-                </div>
-                <div className="col-4 col-md-6 d-flex justify-content-end">
-                  <img
-                    src={magicMind}
-                    alt="magic mind"
-                    className="img-fluid brand-img"
-                  />
-                </div>
-              </div>
-            </div>
-            <p className="text-end align-items-center justify-content-end">
-              Sponsored by <a href="#">MagicMind</a>
-              <OverlayTrigger rootClose overlay={popover} trigger="click">
-                <button className="p-0 border-0 bg-transparent ms-1">
-                  <AiOutlineInfoCircle />
-                </button>
-              </OverlayTrigger>
-            </p>
-          </Carousel.Item>
-        </Carousel>
+        {featuredLoading ? <BillboardLoader /> :
+          <Carousel variant="dark" className="mt-4" controls={false}>
+            {brands.slice(0,3).map(({
+              FeaturedProductImage,
+              Domain,
+              BillboardTagline,
+              Logo,
+              BillboardImage,
+              Name,
+              FeaturedProductURL
+            }) => <Carousel.Item>
+                <BillBoardItem
+                  name={Name}
+                  backgroundUrl={BillboardImage?.url}
+                  imageUrl={FeaturedProductImage?.url}
+                  CTALink={Domain}
+                  logoUrl={Logo?.url}
+                  tagLine={BillboardTagline}
+                  shopUrl={FeaturedProductURL}
+                />
+              </Carousel.Item>)}
+          </Carousel>}
         <div className="mt-4">
           <div className="d-flex align-items-center justify-content-between">
             <h2>New Arrivals</h2>
@@ -253,9 +191,14 @@ const Home = () => {
             </a>
           </div>
           <div className="row g-5">
-            {brands.map(({ logo, bgUrl, products }, key) => (
+          {featuredLoading && Array.from({ length: 3 }).map((_, index) =>
+            <div key={index} className="col-12 col-md-4">
+              <BrandCardLoader />
+            </div>
+          )}
+            {brands.slice(0,3).map(({ Logo, BillboardImage, products, Name }, key) => (
               <div key={key} className="col-12 col-md-4">
-                <BrandCard logo={logo} bgUrl={bgUrl} products={products} />
+                <BrandCard logo={Logo.url} bgUrl={BillboardImage.url} products={products} name={Name} />
               </div>
             ))}
           </div>
