@@ -33,7 +33,7 @@ const OurFavorites = () => {
 
   return (
     <PageLayout>
-      <div className="mt-4 mb-5">
+      <div className="mt-4">
         <div className="d-flex align-items-center justify-content-between">
           <h2>Our Favorite Brands</h2>
           <a href="#" className="text-decoration-none link-arrow">

@@ -5,6 +5,8 @@ import API from '../../services/api';
 import ProductCard from '../../Components/ProductCard';
 import ProductCardLoader from '../../Components/ProductCardLoader';
 import PageLayout from '../../Layout/Page';
+import { BrandCardLoader } from '../../Components/BrandCard';
+import useBrands from '../../hooks/useBrands';
 import './style.scss';
 
 const TopBrand = ({ name, products, className }) => {
@@ -26,8 +28,8 @@ const TopBrand = ({ name, products, className }) => {
 
 const TopSeller = () => {
   const [products, setProducts] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const { loading: brandLoading, brands } = useBrands(3);
 
   const getNewArrivalProducts = async () => {
     try {
@@ -44,21 +46,10 @@ const TopSeller = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     getNewArrivalProducts();
-    getBrands();
   }, []);
-
-  const getBrands = async (search) => {
-    try {
-      setLoading(true);
-      const { data } = await API.get('/api/brand/list', { search, limit: 3 });
-      setBrands(data.value);
-    } catch (error) {
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <PageLayout>
@@ -101,12 +92,17 @@ const TopSeller = () => {
             ))}
           </div>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 mb-5">
           <div className="d-flex align-items-center justify-content-between">
             <h2>Top Selling Brands</h2>
           </div>
           <div className="row g-3">
-            {brands.map((brand, index) => (
+            {brandLoading && Array.from({ length: 3 }).map((_, index) =>
+              <div key={index} className="col-12 col-md-4">
+                <BrandCardLoader />
+              </div>
+            )}
+            {brands.slice(0, 3).map((brand, index) => (
               <TopBrand
                 className="col-12 col-md-4"
                 name={brand?.vendor || brand}

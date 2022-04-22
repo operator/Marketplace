@@ -36,7 +36,7 @@ const CheckBoxGroup = ({
       id={value}
       onClick={() => onCheck(value)}
       key={value}
-      checked={selected.find(option => option.value === value)}
+      checked={selected.find(option => option === value)}
     />)}
   </Form>
 };

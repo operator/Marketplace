@@ -68,7 +68,7 @@ const BillBoardItem = ({
         <div className="col-4 col-md-6 offset-md-1 d-flex justify-content-end">
           <img
             src={imageUrl}
-            alt="magic mind"
+            alt={name}
             className="img-fluid brand-img"
           />
         </div>
