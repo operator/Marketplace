@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from 'react';
 import classnames from 'classnames';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import moneyFormatter from '../../utilities/moneyFormatter';
@@ -17,16 +16,19 @@ const ProductCard = ({ product, className }) => {
     navigate(`/product-details?product=${product.productID}`);
   }
 
-  const colorMetaName = 'Color';
+  const colorMetaNameRegex = new RegExp('^colou*r$', 'i');
   const maxColorOptionsToShow = 5;
 
   const getColorOptions = () => {
-    const colorOptions = product?.meta_data.filter(md => md.key === colorMetaName);
+    const colorOptions = product?.meta_data.filter(md => colorMetaNameRegex.test(md.key));
     return !!colorOptions && !!colorOptions[0] ? colorOptions[0].values : false;
   }
 
   const getSelectableVariantByColorOption = colorOptionValue => {
-    return product?.variants.find(variant => variant.meta_data.find(md => md.key === colorMetaName && md.value === colorOptionValue))
+    return product?.variants
+    .find(variant => variant.meta_data
+      .find(md => colorMetaNameRegex
+        .test(md.key) && md.value === colorOptionValue))
   }
 
   const selectColorOption = colorOptionValue => {
@@ -45,7 +47,7 @@ const ProductCard = ({ product, className }) => {
   return (
     <div className={classnames("product-card d-flex flex-md-column", className)}>
       <div onClick={onClick} className="product-card_img-wrapper overflow-hidden rounded-2">
-        <img src={product.images[0].src} alt="product" />
+        <img src={!!selectedVariant && !!selectedVariant?.image?.src ? selectedVariant?.image?.src : product.images[0].src} alt="product" />
       </div>
       {product.variants.length > 1 && getColorOptions() ?
         <div className="product-card_variants">
