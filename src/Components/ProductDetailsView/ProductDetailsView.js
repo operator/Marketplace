@@ -8,7 +8,7 @@ import ProductLoader from './Product/ProductLoader/ProductLoader';
 import APIContext from '../../Contexts/APIContext';
 
 const ProductDetailsView = () => {
-  const { loadingProduct } = useContext(APIContext);
+  const { loadingProduct, isRandomProduct } = useContext(APIContext);
   return (
     <div className="container product-details-page">
       <div>
@@ -23,6 +23,13 @@ const ProductDetailsView = () => {
           <div className="d-flex">
             <ProductsListFourProducts />
           </div>
+          {isRandomProduct && (
+            <div className="text-center">
+              <a className="btn btn-light text-center" href="/product-details">
+                🎲 Surprise Me Again
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>

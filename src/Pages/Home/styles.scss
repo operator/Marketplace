@@ -2,7 +2,7 @@
   cursor: pointer;
   &:hover {
     a {
-      color: white
+      // color: white
     }
   }
 }
@@ -44,4 +44,16 @@
   text-overflow: ellipsis;
   mix-blend-mode: difference;
   color: white;
+}
+.sponsored-by {
+  font-size: 12px;
+  line-height: 24px;
+}
+.home-page {
+  h2 {
+    margin-bottom: 22.4px;
+  }
+  section {
+    margin-top: 56px;
+  }
 }

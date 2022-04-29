@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
@@ -26,8 +27,9 @@ const ProductDetails = () => {
   const [products, setProducts] = useState([]);
   const [productLoading, setProductLoading] = useState(false);
   const [productsLoading, setProductsLoading] = useState(true);
-  const [searchParams] = useSearchParams();
-
+  const [searchParams, setParams] = useSearchParams();
+  const [isRandom, setIsRandom] = useState(false);
+ 
   const getProducts = async (filters = {}) => {
     const { data } = await API.get('/api/products', { ...filters });
     setProducts(data.value);
@@ -44,7 +46,7 @@ const ProductDetails = () => {
       setProductLoading(false)
       getProducts({ search: productData.title });
     });
-  }, [searchParams]);
+  }, []);
 
   const getRandomProduct = useCallback(async() => {
     try {
@@ -52,6 +54,10 @@ const ProductDetails = () => {
       const { data: { product } } = await API.get('/api/product/random');
       setProduct(product);
       getProducts({ search: product.title });
+      setParams({
+        product: product.productID
+      });
+      setIsRandom(true);
     } catch(error) {
     } finally {
       setProductLoading(false);
@@ -64,7 +70,7 @@ const ProductDetails = () => {
     } else {
       getRandomProduct();
     }
-  }, [getProductByID, getRandomProduct, searchParams])
+  }, [getProductByID, getRandomProduct])
 
   return (
     <div className="main">
@@ -75,6 +81,7 @@ const ProductDetails = () => {
           loadingProducts: productsLoading,
           loadingProduct: productLoading,
           getProducts: getProducts,
+          isRandomProduct: isRandom
         }}
       >
         <Header />

@@ -52,13 +52,13 @@ const TopSeller = () => {
   }, []);
 
   return (
-    <PageLayout>
+    <PageLayout className="topseller-page">
       <>
-        <div className="mt-4">
+        <section>
           <div>
             <h2>Top Selling Products Today</h2>
           </div>
-          <div className="d-flex flex-wrap">
+          <div className="d-flex flex-wrap justify-content-between">
             {loading &&
               !products.length &&
               Array.from({ length: 6 }).map((_, index) => (
@@ -72,12 +72,12 @@ const TopSeller = () => {
               />
             ))}
           </div>
-        </div>
-        <div className="mt-4">
+        </section>
+        <section>
           <div>
             <h2>Top Selling Products Today</h2>
           </div>
-          <div className="d-flex flex-wrap">
+          <div className="d-flex flex-wrap justify-content-between">
             {loading &&
               !products.length &&
               Array.from({ length: 6 }).map((_, index) => (
@@ -91,8 +91,8 @@ const TopSeller = () => {
               />
             ))}
           </div>
-        </div>
-        <div className="mt-4 mb-5">
+        </section>
+        <section className="mb-5">
           <div className="d-flex align-items-center justify-content-between">
             <h2>Top Selling Brands</h2>
           </div>
@@ -111,7 +111,7 @@ const TopSeller = () => {
               />
             ))}
           </div>
-        </div>
+        </section>
       </>
     </PageLayout>
   );

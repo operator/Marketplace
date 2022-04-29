@@ -4,7 +4,7 @@
   .product-card_img-wrapper {
     width: 206px;
     height: 206px;
-    background-color: rgba(7, 7, 44, 0.03);
+    margin-bottom: 12px;
     img {
       height: 100%;
       width: 100%;
@@ -52,5 +52,8 @@
         text-decoration: underline;
       }
     }
+  }
+  .img-overlay {
+    background-color: rgba(7, 7, 44, 0.03);
   }
 }

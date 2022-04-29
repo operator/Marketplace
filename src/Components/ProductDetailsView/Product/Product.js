@@ -6,6 +6,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import './Product.css';
 import APIContext from '../../../Contexts/APIContext';
 import moneyFormatter from '../../../utilities/moneyFormatter';
+import Img from '../../Img';
 
 function OptionSelector({
   selected,
@@ -43,7 +44,7 @@ export default function Product() {
   });
 
   const additionalImages = images && images.map((image, key) => (
-    <img
+    <Img
       key={'image' + key}
       className="additional-images__img"
       src={image.src}
@@ -105,7 +106,7 @@ export default function Product() {
     <div className="product d-flex jc-sb">
       <div className="content col-5">
         <div className="flex-popup">
-          <img
+          <Img
             className="primary-image__img"
             src={mainImage}
             alt="PrimaryImage"

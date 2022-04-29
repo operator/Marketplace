@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import moneyFormatter from '../../utilities/moneyFormatter';
 import './style.scss';
+import Img from '../Img';
 
 const ProductCard = ({ product, className }) => {
   const navigate = useNavigate()
@@ -46,8 +47,9 @@ const ProductCard = ({ product, className }) => {
 
   return (
     <div className={classnames("product-card d-flex flex-md-column", className)}>
-      <div onClick={onClick} className="product-card_img-wrapper overflow-hidden rounded-2">
-        <img src={!!selectedVariant && !!selectedVariant?.image?.src ? selectedVariant?.image?.src : product.images[0].src} alt="product" />
+      <div onClick={onClick} className="product-card_img-wrapper overflow-hidden rounded-2 position-relative">
+        <div className="position-absolute img-overlay w-100 h-100"  />
+        <Img src={!!selectedVariant && !!selectedVariant?.image?.src ? selectedVariant?.image?.src : product.images[0].src} alt="product" />
       </div>
       {product.variants.length > 1 && getColorOptions() ?
         <div className="product-card_variants">
@@ -70,7 +72,7 @@ const ProductCard = ({ product, className }) => {
         </div>
         : ""
       }
-      <div onClick={onClick} className="d-flex flex-column product-card_details ms-2">
+      <div onClick={onClick} className="d-flex flex-column product-card_details">
         <span className="fw-bolder mb-2">
           {moneyFormatter(product.maxPrice, product.currencyCode)}
         </span>

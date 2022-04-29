@@ -19,9 +19,16 @@ const CheckBoxLoader = ({ className, xs }) => {
 };
 
 export const CheckBoxGroupLoader = () => {
+  const getRandomSize = () => Math.floor(Math.random() * (10 - 3 + 1)) + 3;
   return (
     <Placeholder bg="dark" animation="glow">
-      {[10, 11, 8, 10, 5].map((xs) => (
+      {[
+        getRandomSize(),
+        getRandomSize(),
+        getRandomSize(),
+        getRandomSize(),
+        getRandomSize()
+      ].map((xs) => (
         <CheckBoxLoader key={xs} className="mb-2" xs={xs} />
       ))}
     </Placeholder>
@@ -58,7 +65,7 @@ const FilterBrand = ({ changeBrandsFilterBar }) => {
         onChange={onChangeHandler}
         value={value}
       />
-      {loading && <CheckBoxGroupLoader />}
+      {loading  && <CheckBoxGroupLoader />}
       {hasMore && (
         <button onClick={loadNextPage} className="btn p-0 shadow-none">
           Load more

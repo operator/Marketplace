@@ -6,6 +6,7 @@ import ProductCard from '../../Components/ProductCard';
 import API from '../../services/api';
 import ProductCardLoader from '../../Components/ProductCardLoader';
 import useFeauredMerchants from '../../hooks/useFeaturedMerchants';
+import './style.scss'
 
 const OurFavorites = () => {
   const [loading, setLoading] = useState(false);
@@ -32,8 +33,8 @@ const OurFavorites = () => {
   }, []);
 
   return (
-    <PageLayout>
-      <div className="mt-4">
+    <PageLayout className="our-favorites-page">
+      <section>
         <div className="d-flex align-items-center justify-content-between">
           <h2>Our Favorite Brands</h2>
           <a href="#" className="text-decoration-none link-arrow">
@@ -52,12 +53,12 @@ const OurFavorites = () => {
               </div>
             ))}
         </div>
-      </div>
-      <div className="mt-4 mb-5">
+      </section>
+      <section className="mb-5">
         <div>
           <h2>Operator's Favorites Products</h2>
         </div>
-        <div className="d-flex flex-wrap">
+        <div className="d-flex flex-wrap justify-content-between">
           {loading &&
             !products.length &&
             Array.from({ length: 6 }).map((_, index) => (
@@ -65,13 +66,13 @@ const OurFavorites = () => {
             ))}
           {products.map((product, index) => (
             <ProductCard
-              className="mb-3 me-md-3"
+              className="mb-3"
               product={product}
               key={index}
             />
           ))}
         </div>
-      </div>
+      </section>
     </PageLayout>
   );
 };
