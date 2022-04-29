@@ -1,31 +1,31 @@
-import { useNavigate } from 'react-router-dom';
-import { Link, NavLink } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
-import marketPlaceLogo from '../../Assets/Marketplace.svg';
-import byOperatorLogo from '../../Assets/byOperator.svg';
-import SearchInput from '../../Components/Header/SearchInput';
-import Footer from '../../Components/Footer';
+import marketPlaceLogo from "../../Assets/Marketplace.svg";
+import byOperatorLogo from "../../Assets/byOperator.svg";
+import SearchInput from "../../Components/Header/SearchInput";
+import Footer from "../../Components/Footer";
 
 const navElements = [
   {
-    text: 'New Arrivals',
-    url: '/products?order_by=DESC&sort_by=productCreatedAt',
+    text: "New Arrivals",
+    url: "/products?order_by=DESC&sort_by=productCreatedAt",
   },
   {
-    text: 'Top Sellers',
-    url: '/top-sellers',
+    text: "Top Sellers",
+    url: "/top-sellers",
   },
   {
-    text: 'Our Favorites',
-    url: '/our-favorites',
+    text: "Our Favorites",
+    url: "/our-favorites",
   },
   {
-    text: 'Suprise Me',
-    url: '/product-details',
+    text: "Surprise Me",
+    url: "/product-details",
   },
   {
-    text: 'Browse All',
-    url: '/products',
+    text: "Browse All",
+    url: "/products",
   },
 ];
 const PageLayout = ({ children }) => {
@@ -48,7 +48,12 @@ const PageLayout = ({ children }) => {
         <ul className="nav justify-content-center mb-4">
           {navElements.map(({ text, url }) => (
             <li key={text} className="nav-item">
-              <NavLink className={({ isActive }) => `nav-link ${isActive && 'fw-bold'}`} to={url}>
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link ${isActive && "fw-bold"}`
+                }
+                to={url}
+              >
                 {text}
               </NavLink>
             </li>
