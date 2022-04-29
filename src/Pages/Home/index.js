@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
 import Carousel from "react-bootstrap/Carousel";
+import { Link } from 'react-router-dom';
 
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { OverlayTrigger, Popover, Placeholder } from "react-bootstrap";
@@ -12,6 +13,7 @@ import ProductCardLoader from "../../Components/ProductCardLoader";
 import PageLayout from "../../Layout/Page";
 import BrandCard, { BrandCardLoader } from "../../Components/BrandCard";
 import useFeauredMerchants from "../../hooks/useFeaturedMerchants";
+import Img from '../../Components/Img';
 
 const BillboardLoader = () => {
   return (
@@ -48,20 +50,22 @@ const BillBoardItem = ({
   return (
     <>
       <div
-        className="p-3 py-5 p-md-5 d-flex align-items-center carousel-img"
+        className="p-3 py-5 p-md-5 d-flex align-items-center carousel-img position-relative"
         style={{
           backgroundImage: `url(${backgroundUrl})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
         }}
       >
         <div className="row px-md-4 w-100">
           <div className="col-8 col-md-5 d-flex flex-column justify-content-center align-items-start">
-            <img
-              src={logoUrl}
-              className="brand-logo mb-3 mb-md-5"
-              alt="brand logo"
-            />
+            {logoUrl && (
+              <Img
+                src={logoUrl}
+                className="brand-logo mb-3 mb-md-5"
+                alt="brand logo"
+              />
+            )}
             <div>
               <h2 className="mb-4 brand-tagline font-display display-md-5">
                 {tagLine}
@@ -79,12 +83,12 @@ const BillBoardItem = ({
             </div>
           </div>
           <div className="col-4 col-md-6 offset-md-1 d-flex justify-content-end">
-            <img src={imageUrl} alt={name} className="img-fluid brand-img" />
+            {imageUrl && <Img src={imageUrl} alt={name} className="img-fluid brand-img" /> }
           </div>
         </div>
       </div>
-      <p className="text-end mb-5 mb-md-3">
-        Sponsored by{" "}
+      <p className="text-end mb-5 mb-md-3 sponsored-by">
+        Sponsored by{' '}
         <a href={CTALink} target="_blank" rel="noreferrer">
           {name}
         </a>
@@ -125,12 +129,12 @@ const Home = () => {
   }, []);
 
   return (
-    <PageLayout>
+    <PageLayout className="home-page">
       <>
         {featuredLoading ? (
           <BillboardLoader />
         ) : (
-          <Carousel variant="dark" className="mt-4" controls={false}>
+          <Carousel interval={null} variant="dark" className="mt-4" controls={false}>
             {brands
               .slice(0, 3)
               .map(
@@ -159,14 +163,14 @@ const Home = () => {
           </Carousel>
         )}
 
-        <div className="mt-4">
+        <section>
           <div className="d-flex align-items-center justify-content-between">
             <h2>Today's Top Sellers</h2>
-            <a href="#" className="text-decoration-none link-arrow">
+            <Link to="/top-sellers" className="text-decoration-none link-arrow">
               View more
-            </a>
+            </Link>
           </div>
-          <div className="row g-3">
+          <div className="row g-0 flex-wrap justify-content-between">
             {loading &&
               !products.length &&
               Array.from({ length: 6 }).map((_, index) => (
@@ -175,23 +179,21 @@ const Home = () => {
                 </div>
               ))}
             {products.slice(6, 12).map((product, index) => (
-              <div key={index} className="col-12 col-md-4 col-lg-2">
-                <ProductCard product={product} />
-              </div>
+              <ProductCard key={index} product={product} />
             ))}
           </div>
-        </div>
-        <div className="mt-4">
+        </section>
+        <div className="mt-5">
           <div className="d-flex align-items-center justify-content-between">
             <h2>New Arrivals</h2>
-            <a
-              href="/products?order_by=DESC&sort_by=productCreatedAt"
+            <Link
+              to="/products?order_by=DESC&sort_by=productCreatedAt"
               className="text-decoration-none link-arrow"
             >
               View more
-            </a>
+            </Link>
           </div>
-          <div className="row g-3">
+          <div className="row g-0 flex-wrap justify-content-between">
             {loading &&
               !products.length &&
               Array.from({ length: 6 }).map((_, index) => (
@@ -200,20 +202,18 @@ const Home = () => {
                 </div>
               ))}
             {products.slice(0, 6).map((product, index) => (
-              <div key={index} className="col-12 col-md-4 col-lg-2">
-                <ProductCard product={product} />
-              </div>
+              <ProductCard key={index} product={product} />
             ))}
           </div>
         </div>
-        <div className="mt-4 mb-5">
+        <section className="mb-5">
           <div className="d-flex align-items-center justify-content-between">
             <h2>Our Favorite Brands</h2>
-            <a href="#" className="text-decoration-none link-arrow">
+            <Link to="/our-favorites" className="text-decoration-none link-arrow">
               View more
-            </a>
+            </Link>
           </div>
-          <div className="row g-5">
+          <div className="row g-5 flex-wrap">
             {featuredLoading &&
               Array.from({ length: 3 }).map((_, index) => (
                 <div key={index} className="col-12 col-md-4">
@@ -233,7 +233,7 @@ const Home = () => {
                 </div>
               ))}
           </div>
-        </div>
+        </section>
       </>
     </PageLayout>
   );

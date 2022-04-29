@@ -205,7 +205,6 @@ class MarketplaceSearch extends Component {
             </div>
           </div>
         </div>
-        <Footer />
       </APIProvider.Provider>
     );
   }

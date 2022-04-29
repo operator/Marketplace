@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
+import classnames from 'classnames';
 
 import marketPlaceLogo from "../../Assets/Marketplace.svg";
 import byOperatorLogo from "../../Assets/byOperator.svg";
 import SearchInput from "../../Components/Header/SearchInput";
 import Footer from "../../Components/Footer";
+import Img from '../../Components/Img'
 
 const navElements = [
   {
@@ -28,21 +30,21 @@ const navElements = [
     url: "/products",
   },
 ];
-const PageLayout = ({ children }) => {
+const PageLayout = ({ children, className }) => {
   const navigate = useNavigate();
   const onSearchSubmit = (value) => {
     navigate(`/products?search=${value}`);
   };
   return (
     <>
-      <div className="container pt-4">
+      <div className={classnames("container pt-4", className)}>
         <div className="d-flex align-items-center justify-content-center flex-column logo">
           <div className="mb-3">
             <Link to="/">
-              <img src={marketPlaceLogo} alt="market place logo" />
+              <Img src={marketPlaceLogo} alt="market place logo" />
             </Link>
           </div>
-          <img src={byOperatorLogo} alt="Operator" />
+          <Img src={byOperatorLogo} alt="Operator" />
         </div>
         <hr />
         <ul className="nav justify-content-center mb-4">
