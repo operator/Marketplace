@@ -1,3 +1,19 @@
+## Marketplace by Operator
+| Build your very own marketplace app, powered by the new Operator e-commerce protocol.
+
+The Marketplace by Operator is a production-ready application that you can use to jump-start your own e-commerce app development.
+
+
+- 10,000+ products available to sell
+- Your favorite brands
+- Discover products from trusted brands
+- Easily checkout through a merchants existing store.
+- Built on top of the [Operator Protocol](https://operator.com)
+
+
+The Marketplace is built using the Operator Open Product API. A public database powered by the blockchain that lets anyone view product information and earn rewards for affiliate sales.
+
+
 # Getting Started with The Marketplace App
 
 1.Clone the app from the git repository
